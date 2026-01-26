@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>大熊学武功：功夫节奏挑战</title>
-    <link rel="icon" href="icon-192.png">
-    <link rel="apple-touch-icon" href="icon-192.png">    
-    <link rel="manifest" href="manifest.json">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Zhi+Mang+Xing&family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Font Awesome for speaker icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> 
+
     <style>
         /* 页面整体样式 */
         body {
@@ -25,12 +24,12 @@
             overflow: hidden;
             flex-direction: column;
         }
-        
+
         /* 游戏容器 */
         .game-container {
             width: 95%;
             max-width: 900px;
-            height: 800px;
+            height: 800px; /* PC端高度不变，将在手机端调整 */
             background: linear-gradient(to bottom, #aed581, #dce775);
             border-radius: 30px;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
@@ -40,7 +39,7 @@
             display: flex;
             flex-direction: column;
         }
-        
+
         /* 顶部信息栏 */
         .info-bar {
             background-color: #558b2f;
@@ -54,16 +53,13 @@
             border-bottom: 4px solid #33691e;
             font-family: 'Press Start 2P', cursive;
         }
-        
         .info-bar span {
             margin: 0 15px;
         }
-        
         .info-bar .level {
             font-size: 0.8em;
             color: #cddc39;
         }
-        
         #bgMusicToggle {
             background: none;
             border: none;
@@ -74,26 +70,25 @@
             margin-left: 10px;
             transition: color 0.3s ease;
         }
-        
         #bgMusicToggle:hover {
             color: #cddc39;
         }
-        
+
         /* 游戏区域 */
         .play-area {
             flex-grow: 1;
-            position: relative;
+            position: relative; /* 保持相对定位，用于反馈提示的绝对定位 */
             display: flex;
-            flex-direction: column;
+            flex-direction: column; /* 垂直排列内容 */
             align-items: center;
-            justify-content: space-between;
-            padding: 20px;
+            justify-content: flex-start; /* 调整为从顶部开始布局 */
+            padding: 10px; /* 减少play-area的内边距，增加内容空间 */
         }
-        
+
         /* 师傅图标 */
         #master {
-            position: absolute;
-            top: 0px;
+            position: absolute; /* 调整为绝对定位，精确控制位置 */
+            top: 0px; /* 师傅进一步靠上，确保头部完全露出 */
             left: 50%;
             transform: translateX(-50%);
             font-size: 7em;
@@ -103,13 +98,12 @@
             z-index: 5;
             line-height: 1;
         }
-        
         /* 师傅的招式提示 */
         .master-move-display {
-            position: absolute;
-            top: 25%;
+            position: absolute; /* 保持绝对定位 */
+            top: 20%; /* 提示词位置上移，紧邻师傅下方 */
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%); /* 确保居中 */
             background-color: rgba(255, 255, 255, 0.9);
             padding: 15px 25px;
             border-radius: 15px;
@@ -121,29 +115,26 @@
             min-width: 150px;
             opacity: 0;
             transition: opacity 0.3s ease, transform 0.3s ease;
-            z-index: 15;
+            z-index: 15; /* 确保在师傅之上 */
             min-height: 80px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
         }
-        
         .master-move-display.show {
             opacity: 1;
             transform: translate(-50%, -50%);
         }
-        
         .master-move-display .text {
             font-size: 0.4em;
             color: #333;
             margin-top: 5px;
         }
-        
         /* 大熊图标 */
         #bear {
-            position: absolute;
-            top: 40%;
+            position: absolute; /* 调整为绝对定位 */
+            top: 40%; /* 调整大熊位置，使其在师傅出招提示和连击提示之间 */
             left: 50%;
             transform: translateX(-50%);
             font-size: 9em;
@@ -152,29 +143,30 @@
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
             z-index: 5;
             line-height: 1;
-            display: block;
+            display: block; /* 恢复显示大熊 */
         }
-        
+
         /* 玩家操作按钮 */
         .player-controls {
-            position: absolute;
-            bottom: 30px;
+            position: absolute; /* 保持绝对定位 */
+            bottom: 30px; /* 调整到大熊下方，并留出与音乐播放器的间距 */
             left: 50%;
             transform: translateX(-50%);
+            /* 关键修改：改为2列布局，使其接近方形 */
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(2, 1fr); /* 2列布局 */
             gap: 15px;
             padding: 20px;
             background-color: rgba(255, 255, 255, 0.8);
             border-radius: 20px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
             z-index: 10;
-            max-width: 250px;
+            /* 限制最大宽度，使其更紧凑呈方形 */
+            max-width: 250px; 
         }
-        
         .action-button {
-            width: 100px;
-            height: 100px;
+            width: 100px; /* 按钮大小 */
+            height: 100px; /* 按钮大小 */
             background-color: #ffb300;
             border: 3px solid #fb8c00;
             border-radius: 15px;
@@ -190,19 +182,16 @@
             user-select: none;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        
         .action-button:hover:not(:disabled) {
             background-color: #ffa000;
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         }
-        
         .action-button:active:not(:disabled) {
             transform: translateY(0);
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             background-color: #e65100;
         }
-        
         .action-button:disabled {
             background-color: #cccccc;
             border-color: #bbbbbb;
@@ -210,22 +199,21 @@
             cursor: not-allowed;
             box-shadow: none;
         }
-        
         .action-button .text {
             font-size: 0.4em;
             color: #333;
             margin-top: 5px;
         }
-        
-        /* 游戏反馈提示 */
+
+        /* 游戏反馈提示 (连击提示词图标) */
         .feedback {
             position: absolute;
-            top: 50%;
+            top: 35%; /* 调整位置，使其在师傅出招提示和操作按钮之间 */
             left: 50%;
             transform: translate(-50%, -50%);
             font-size: 6em;
             font-weight: bold;
-            color: #4CAF50;
+            color: #F44336; /* 默认显示红色“错误！” */
             text-shadow: 4px 4px 8px rgba(0,0,0,0.6);
             opacity: 0;
             transition: opacity 0.3s ease, transform 0.3s ease;
@@ -233,28 +221,28 @@
             pointer-events: none;
             white-space: nowrap;
         }
-        
         .feedback.show {
             opacity: 1;
             transform: translate(-50%, -70%);
         }
-        
         .feedback.wrong {
-            color: #F44336;
+            color: #F44336; /* 红色表示错误 */
         }
-        
         .feedback.combo {
-            color: #FFEB3B;
+            color: #FFEB3B; /* 亮黄色表示连击 */
             font-size: 7em;
             animation: pulse 0.5s ease-out forwards;
         }
-        
+        .feedback.correct {
+            color: #4CAF50; /* 绿色表示正确 */
+        }
+
         @keyframes pulse {
             0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
             50% { transform: translate(-50%, -60%) scale(1.1); opacity: 1; }
             100% { transform: translate(-50%, -70%) scale(1); opacity: 0; }
         }
-        
+
         /* 游戏结束或开始前的叠加层 */
         .overlay {
             position: absolute;
@@ -273,18 +261,15 @@
             text-align: center;
             border-radius: 25px;
         }
-        
         .overlay h2 {
             margin-bottom: 20px;
             font-size: 1.5em;
         }
-        
         .overlay p {
             font-size: 0.8em;
             margin-top: -10px;
             margin-bottom: 30px;
         }
-        
         .overlay button {
             background-color: #ffb300;
             color: #fff;
@@ -296,24 +281,22 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
-        
         .overlay button:hover {
             background-color: #ffa000;
         }
-        
         .overlay.hidden {
-            display: none !important;
+            display: none !important; 
             opacity: 0;
-            pointer-events: none;
+            pointer-events: none; 
         }
-        
+
         /* 放松音乐播放器样式 */
         .relax-music-player {
             width: calc(100% - 40px);
             background-color: #e0f2f7;
             padding: 15px 20px;
             border-radius: 15px;
-            margin-top: 20px;
+            margin-top: 20px; /* 确保与上方操作按钮有足够间距 */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -321,14 +304,12 @@
             border: 2px solid #b2ebf2;
             z-index: 5;
         }
-        
         .relax-music-player h3 {
             margin-top: 0;
             margin-bottom: 10px;
             color: #00bcd4;
             font-size: 1.2em;
         }
-        
         .relax-music-controls {
             display: flex;
             align-items: center;
@@ -337,7 +318,6 @@
             justify-content: center;
             flex-wrap: wrap;
         }
-        
         .relax-music-controls button {
             background-color: #4dd0e1;
             color: white;
@@ -349,11 +329,9 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
-        
         .relax-music-controls button:hover {
             background-color: #26c6da;
         }
-        
         .relax-music-controls input[type="range"] {
             width: 100px;
             -webkit-appearance: none;
@@ -362,7 +340,6 @@
             border-radius: 3px;
             outline: none;
         }
-        
         .relax-music-controls input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             width: 16px;
@@ -371,13 +348,11 @@
             background: #00bcd4;
             cursor: pointer;
         }
-        
         .relax-music-controls label {
             font-size: 0.9em;
             color: #00838f;
         }
-        
-        /* 音乐选择器布局调整 */
+        /* 音乐选择器布局调整 - 横向排列 */
         .music-selector-row {
             display: flex;
             flex-wrap: wrap;
@@ -386,22 +361,19 @@
             margin-bottom: 10px;
             width: 100%;
         }
-        
         .music-selector {
             display: flex;
             align-items: center;
             gap: 5px;
             flex-shrink: 0;
-            min-width: 180px;
+            min-width: 180px; /* 确保有足够宽度 */
             justify-content: center;
         }
-        
         .music-selector label {
             font-size: 0.9em;
             color: #00838f;
             white-space: nowrap;
         }
-        
         .music-selector select {
             padding: 5px 8px;
             border-radius: 8px;
@@ -414,110 +386,99 @@
             min-width: 80px;
             max-width: 180px;
         }
-        
+
         /* 响应式调整 */
         @media (max-width: 768px) {
             .game-container {
-                height: 780px;
+                height: 95vh; /* 使用视口高度，确保适应不同手机屏幕，保留顶部状态栏和底部浏览器导航 */
                 width: 98%;
                 border-radius: 20px;
             }
-            
             .info-bar {
                 font-size: 1.2em;
                 padding: 10px 15px;
             }
-            
             #master {
-                top: 5px;
+                top: -10px; /* 手机端师傅进一步靠上，确保头部完全露出 */
                 font-size: 5em;
             }
-            
+            /* 大熊图标位置 */
             #bear {
-                bottom: 100px;
+                top: 35%; /* 调整大熊位置，使其在师傅出招提示和连击提示之间，且能被看到 */
                 font-size: 7em;
+                display: block; /* 恢复显示大熊 */
             }
-            
             .master-move-display {
-                top: 20%;
+                top: 15%; /* 手机端师傅招式提示位置进一步上移，紧贴师傅 */
                 font-size: 3em;
                 padding: 10px 15px;
                 min-height: 60px;
             }
-            
-            .player-controls {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-                padding: 15px;
-                bottom: 10px;
-                max-width: 200px;
-            }
-            
-            .action-button {
-                width: 70px;
-                height: 70px;
-                font-size: 2.2em;
-            }
-            
-            .action-button .text {
-                font-size: 0.3em;
-            }
-            
             .feedback {
+                top: 25%; /* 手机端连击提示进一步上移，避免与masterMoveDisplay重叠，并确保在bear上方 */
                 font-size: 4em;
             }
-            
             .feedback.combo {
                 font-size: 5em;
             }
-            
+            .player-controls {
+                grid-template-columns: repeat(2, 1fr); /* 手机端维持2列 */
+                gap: 10px;
+                padding: 15px;
+                bottom: 150px; /* 手机端操作按钮大幅度上移，为音乐播放器和底部间距留出更多安全空间 */
+                max-width: 200px; /* 限制手机端按钮区域宽度 */
+            }
+            .action-button {
+                width: 70px; /* 手机端按钮更小 */
+                height: 70px; /* 手机端按钮更小 */
+                font-size: 2.2em;
+            }
+            .action-button .text {
+                font-size: 0.3em;
+            }
             .overlay {
                 font-size: 1.5em;
             }
-            
             .overlay h2 {
                 font-size: 1.2em;
             }
-            
             .overlay p {
                 font-size: 0.7em;
             }
-            
             .overlay button {
                 padding: 10px 20px;
                 font-size: 1.2em;
             }
-            
             .relax-music-player {
                 padding: 10px 15px;
-                margin-top: 15px;
+                position: absolute; /* 绝对定位，从底部计算 */
+                bottom: 0px; /* 贴合底部 */
+                left: 50%;
+                transform: translateX(-50%);
+                width: calc(100% - 40px); /* 保持宽度 */
+                box-sizing: border-box; /* 确保padding不会撑开宽度 */
+                height: auto; /* 自动高度以适应内容，确保不被截断 */
             }
-            
             .relax-music-player h3 {
                 font-size: 1.1em;
             }
-            
             .relax-music-controls {
                 flex-direction: column;
                 gap: 8px;
             }
-            
             .relax-music-controls input[type="range"] {
                 width: 80%;
             }
-            
             .music-selector-row {
                 flex-direction: column;
                 gap: 10px;
                 align-items: flex-start;
                 width: 100%;
             }
-            
             .music-selector {
                 width: 100%;
                 justify-content: flex-start;
             }
-            
             .music-selector select {
                 width: 100%;
             }
@@ -526,92 +487,88 @@
 </head>
 <body>
     <div class="game-container">
-        <!-- 游戏背景音乐 -->
+        <!-- Game Background Music -->
         <audio id="game-bg-music" loop>
-            您的浏览器不支持游戏背景音乐。
+            Your browser does not support game background music.
         </audio>
-        
+
         <div class="info-bar">
-            <span>时间: <span id="timer">60</span>s</span>
-            <span>分数: <span id="score">0</span></span>
-            <span>连击: <span id="combo">0</span></span>
-            <span class="level">等级: <span id="level">学徒</span></span>
-            <button id="bgMusicToggle" title="切换背景音乐">
+            <span>Time: <span id="timer">60</span>s</span>
+            <span>Score: <span id="score">0</span></span>
+            <span>Combo: <span id="combo">0</span></span>
+            <span class="level">Level: <span id="level">Apprentice</span></span>
+            <button id="bgMusicToggle" title="Toggle Background Music">
                 <i class="fas fa-volume-up"></i>
             </button>
         </div>
-        
+
         <div class="play-area">
-            <!-- 师傅图标 -->
+            <!-- Master Icon -->
             <div id="master" class="character">👨‍🏫</div>
-            
-            <!-- 大熊图标 -->
+            <!-- Bear Icon -->
             <div id="bear" class="character">🐻</div>
-            
+
             <div id="masterMoveDisplay" class="master-move-display">
                 <span class="emoji"></span>
                 <div class="text"></div>
             </div>
-            
+
             <div id="feedback" class="feedback"></div>
-            
+
             <div class="player-controls">
                 <button class="action-button" data-action="left-punch">
-                    <span>👊</span><div class="text">左拳</div>
+                    <span>👊</span><div class="text">Left Punch</div>
                 </button>
                 <button class="action-button" data-action="right-punch">
-                    <span>🤜</span><div class="text">右拳</div>
+                    <span>🤜</span><div class="text">Right Punch</div>
                 </button>
                 <button class="action-button" data-action="up-kick">
-                    <span>🤸</span><div class="text">上踢</div>
+                    <span>🤸</span><div class="text">Up Kick</div>
                 </button>
                 <button class="action-button" data-action="down-block">
-                    <span>🛡️</span><div class="text">下挡</div>
+                    <span>🛡️</span><div class="text">Down Block</div>
                 </button>
                 <button class="action-button" data-action="jump">
-                    <span>⬆️</span><div class="text">跳跃</div>
+                    <span>⬆️</span><div class="text">Jump</div>
                 </button>
                 <button class="action-button" data-action="crouch">
-                    <span>⤵️</span><div class="text">蹲伏</div>
+                    <span>⤵️</span><div class="text">Crouch</div>
                 </button>
             </div>
         </div>
-        
+
         <div class="relax-music-player">
             <div class="music-selector-row">
                 <div class="music-selector">
-                    <label for="bgMusicSelector">游戏音乐:</label>
+                    <label for="bgMusicSelector">Game Music:</label>
                     <select id="bgMusicSelector"></select>
                 </div>
                 <div class="music-selector">
-                    <label for="relaxMusicSelector">放松音乐:</label>
+                    <label for="relaxMusicSelector">Relax Music:</label>
                     <select id="relaxMusicSelector"></select>
                 </div>
             </div>
-            
-            <h3>🎵 放松音乐控制 🎵</h3>
-            
+            <h3>🎵 Relax Music Controls 🎵</h3>
             <audio id="relax-audio" loop>
-                您的浏览器不支持放松音乐。
+                Your browser does not support relax music.
             </audio>
-            
             <div class="relax-music-controls">
-                <button id="relaxPlayButton">播放</button>
-                <button id="relaxPauseButton">暂停</button>
-                <label for="relaxVolumeSlider">音量:</label>
+                <button id="relaxPlayButton">Play</button>
+                <button id="relaxPauseButton">Pause</button>
+                <label for="relaxVolumeSlider">Volume:</label>
                 <input type="range" id="relaxVolumeSlider" min="0" max="1" step="0.05" value="0.5">
             </div>
         </div>
-        
+
         <div class="overlay" id="gameOverlay">
-            <h2>大熊学武功！</h2>
-            <p>看师傅演示，快速点击对应的招式！</p>
-            <button id="startButton">开始练功</button>
+            <h2>Bear Kung Fu Challenge!</h2>
+            <p>Watch the master demonstrate, then quickly tap the correct move!</p>
+            <button id="startButton">Start Training</button>
         </div>
     </div>
-    
+
     <script>
-        // ===== 元素获取 =====
+        // --- Element Retrieval ---
         const timerElement = document.getElementById('timer');
         const scoreElement = document.getElementById('score');
         const comboElement = document.getElementById('combo');
@@ -623,70 +580,70 @@
         const feedbackDisplay = document.getElementById('feedback');
         const gameOverlay = document.getElementById('gameOverlay');
         const startButton = document.getElementById('startButton');
-        
-        // 游戏音乐元素
+
+        // Game music elements
         const gameBgMusic = document.getElementById('game-bg-music');
         const bgMusicToggle = document.getElementById('bgMusicToggle');
         const bgMusicIcon = bgMusicToggle.querySelector('i');
         const bgMusicSelector = document.getElementById('bgMusicSelector');
         gameBgMusic.volume = 0.3;
         let isGameBgMusicPlaying = false;
-        
-        // 放松音乐元素
+
+        // Relax music elements
         const relaxAudio = document.getElementById('relax-audio');
         const relaxPlayButton = document.getElementById('relaxPlayButton');
         const relaxPauseButton = document.getElementById('relaxPauseButton');
         const relaxVolumeSlider = document.getElementById('relaxVolumeSlider');
         const relaxMusicSelector = document.getElementById('relaxMusicSelector');
         relaxAudio.volume = relaxVolumeSlider.value;
-        
-        // ===== 游戏状态变量 =====
+
+        // --- Game State Variables ---
         let score = 0;
         let combo = 0;
-        let timeLeft = 60;
-        let gameInterval;
+        let timeLeft = 60; 
+        let gameInterval; 
         let moveInterval;
         let isGameRunning = false;
         let expectedMoveId = null;
         let moveTimeout = null;
         let level = 1;
-        
-        // ===== 游戏数据 =====
+
+        // --- Game Data ---
         const moves = [
-            { id: 'left-punch', emoji: '👊', text: '左拳' },
-            { id: 'right-punch', emoji: '🤜', text: '右拳' },
-            { id: 'up-kick', emoji: '🤸', text: '上踢' },
-            { id: 'down-block', emoji: '🛡️', text: '下挡' },
-            { id: 'jump', emoji: '⬆️', text: '跳跃' },
-            { id: 'crouch', emoji: '⤵️', text: '蹲伏' }
+            { id: 'left-punch', emoji: '👊', text: 'Left Punch' },
+            { id: 'right-punch', emoji: '🤜', text: 'Right Punch' },
+            { id: 'up-kick', emoji: '🤸', text: 'Up Kick' },
+            { id: 'down-block', emoji: '🛡️', text: 'Down Block' },
+            { id: 'jump', emoji: '⬆️', text: 'Jump' },
+            { id: 'crouch', emoji: '⤵️', text: 'Crouch' }
         ];
-        
+
         const levels = [
-            { scoreThreshold: 0, name: '学徒', moveSpeed: 1500 },
-            { scoreThreshold: 100, name: '小熊武者', moveSpeed: 1200 },
-            { scoreThreshold: 300, name: '功夫大熊', moveSpeed: 1000 },
-            { scoreThreshold: 600, name: '宗师之徒', moveSpeed: 800 },
-            { scoreThreshold: 1000, name: '熊霸天下', moveSpeed: 600 }
+            { scoreThreshold: 0, name: 'Apprentice', moveSpeed: 1500 },
+            { scoreThreshold: 100, name: 'Bear Trainee', moveSpeed: 1200 },
+            { scoreThreshold: 300, name: 'Kung Fu Bear', moveSpeed: 1000 },
+            { scoreThreshold: 600, name: 'Disciple Master', moveSpeed: 800 },
+            { scoreThreshold: 1000, name: 'Bear Overlord', moveSpeed: 600 }
         ];
-        
-        // 音乐列表
+
+        // Music lists - strictly according to knowledge base
         const gameMusicList = [
-            { name: "功夫节奏", src: "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3" },
-            { name: "振奋打击", src: "https://assets.mixkit.co/sfx/preview/mixkit-martial-arts-punch-2047.mp3" },
-            { name: "山林修炼", src: "https://www.bensound.com/bensound-music/bensound-littleidea.mp3" }
+            { name: "Kung Fu Rhythm", src: "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3" },
+            { name: "Exhilarating Strike", src: "https://assets.mixkit.co/sfx/preview/mixkit-martial-arts-punch-2047.mp3" },
+            { name: "Mountain Forest Cultivation", src: "https://www.bensound.com/bensound-music/bensound-littleidea.mp3" }
         ];
-        
+
         const relaxMusicList = [
-            { name: "森林摇篮曲", src: "https://www.learningcontainer.com/wp-content/uploads/2020/02/Forest-Lullaby.mp3" },
-            { name: "雨林冥想", src: "https://assets.mixkit.co/sfx/preview/mixkit-forest-stream-loop-2009.mp3" },
-            { name: "海浪声", src: "https://www.bensound.com/bensound-music/bensound-relaxing.mp3" }
+            { name: "Forest Lullaby", src: "https://www.learningcontainer.com/wp-content/uploads/2020/02/Forest-Lullaby.mp3" },
+            { name: "Rainforest Meditation", src: "https://assets.mixkit.co/sfx/preview/mixkit-forest-stream-loop-2009.mp3" },
+            { name: "Ocean Waves", src: "https://www.bensound.com/bensound-music/bensound-relaxing.mp3" }
         ];
-        
-        // ===== 音乐播放辅助函数 =====
+
+        // --- Music Playback Helper Functions ---
         async function loadAndPlayMusic(audioElement, src, shouldPlay) {
-            console.log(`尝试加载: ${src}, 预期播放: ${shouldPlay}`);
+            console.log(`Attempting to load: ${src}, Expected to play: ${shouldPlay}`);
             audioElement.src = src;
-            audioElement.load();
+            audioElement.load(); 
             
             if (shouldPlay) {
                 try {
@@ -698,15 +655,13 @@
                             audioElement.removeEventListener('error', onError);
                             resolve();
                         };
-                        
-                        const onLoadedData = () => {
+                        const onLoadedData = () => { 
                             console.log(`Audio loadeddata: ${src}`);
                             audioElement.removeEventListener('canplaythrough', onCanPlayThrough);
                             audioElement.removeEventListener('loadeddata', onLoadedData);
                             audioElement.removeEventListener('error', onError);
                             resolve();
                         };
-                        
                         const onError = (e) => {
                             console.error(`Audio error during load/play: ${src}`, e);
                             audioElement.removeEventListener('canplaythrough', onCanPlayThrough);
@@ -714,341 +669,311 @@
                             audioElement.removeEventListener('error', onError);
                             reject(new Error(`Audio load error for ${src}: ${e.message || e.type}`));
                         };
-                        
+
                         audioElement.addEventListener('canplaythrough', onCanPlayThrough);
                         audioElement.addEventListener('loadeddata', onLoadedData);
                         audioElement.addEventListener('error', onError);
                         
-                        if (audioElement.readyState >= 4) {
+                        if (audioElement.readyState >= 4) { 
                             onCanPlayThrough();
-                        } else if (audioElement.readyState >= 2) {
+                        } else if (audioElement.readyState >= 2) { 
                             onLoadedData();
                         }
                         
                         setTimeout(() => {
                             reject(new Error(`Audio load timeout for ${src}`));
-                        }, 7000);
+                        }, 7000); 
                     });
-                    
+
                     await audioElement.play();
-                    console.log(`音乐 ${src} 成功播放。`);
+                    console.log(`Music ${src} played successfully.`);
                     return true;
                 } catch (e) {
-                    console.warn(`音乐播放失败 (URL: ${src})，可能需要用户交互或链接失效/格式错误:`, e);
+                    console.warn(`Music playback failed (URL: ${src}), may require user interaction or invalid link/format:`, e);
                     return false;
                 }
             }
             return false;
         }
-        
-        // 填充音乐选择器下拉菜单
+
+        // Populate music selectors
         function populateMusicSelectors() {
             bgMusicSelector.innerHTML = '';
             relaxMusicSelector.innerHTML = '';
-            
+
             gameMusicList.forEach((music) => {
                 const option = document.createElement('option');
                 option.value = music.src;
                 option.textContent = music.name;
                 bgMusicSelector.appendChild(option);
             });
-            
             if (gameMusicList.length > 0) {
                 gameBgMusic.src = gameMusicList[0].src;
                 gameBgMusic.load();
             }
-            
+
             relaxMusicList.forEach((music) => {
                 const option = document.createElement('option');
                 option.value = music.src;
                 option.textContent = music.name;
                 relaxMusicSelector.appendChild(option);
             });
-            
             if (relaxMusicList.length > 0) {
                 relaxAudio.src = relaxMusicList[0].src;
                 relaxAudio.load();
             }
         }
-        
-        // ===== 游戏核心逻辑 =====
-        
-        // 重置游戏状态
+
+        // --- Core Game Logic ---
+
         function resetGame() {
             score = 0;
             combo = 0;
-            timeLeft = 60;
+            timeLeft = 60; 
             level = 1;
-            
             scoreElement.textContent = score;
             comboElement.textContent = combo;
             timerElement.textContent = timeLeft;
             levelElement.textContent = levels[0].name;
             
-            // 确保在重置时清除所有计时器
+            // Ensure all timers are cleared on reset
             if (gameInterval) {
                 clearInterval(gameInterval);
-                gameInterval = null;
-            }
-            
+                gameInterval = null; 
+            } 
             if (moveInterval) {
                 clearInterval(moveInterval);
                 moveInterval = null;
             }
-            
             if (moveTimeout) {
                 clearTimeout(moveTimeout);
                 moveTimeout = null;
             }
             
-            isGameRunning = false;
+            isGameRunning = false; 
             expectedMoveId = null;
-            
             masterMoveDisplay.classList.remove('show');
             feedbackDisplay.classList.remove('show', 'correct', 'wrong', 'combo');
-            feedbackDisplay.textContent = '';
-            
+            feedbackDisplay.textContent = ''; 
             enableActionButtons(true);
-            
+
             gameBgMusic.pause();
             gameBgMusic.currentTime = 0;
             isGameBgMusicPlaying = false;
             bgMusicIcon.classList.remove('fa-volume-mute');
             bgMusicIcon.classList.add('fa-volume-up');
-            
+
             relaxAudio.pause();
             relaxAudio.currentTime = 0;
         }
-        
-        // 开始游戏
+
         async function startGame() {
             console.log("startGame called.");
-            
-            // 如果游戏已经在运行，或者正在启动过程中，则忽略重复调用
-            if (isGameRunning) {
+            // alert("Game is starting!"); // Temporarily remove alert to avoid blocking, use console.log
+
+            // If game is already running or starting, ignore duplicate calls
+            if (isGameRunning) { 
                 console.log("Game is already running or starting, ignoring duplicate call.");
                 return;
             }
             
-            resetGame();
+            resetGame(); // Reset all states and timers before starting a new game
             
-            // 关键：在设置isGameRunning=true之前先隐藏overlay，防止竞争条件
-            gameOverlay.classList.add('hidden');
+            // Critical: Hide overlay before setting isGameRunning=true, to prevent race conditions
+            gameOverlay.classList.add('hidden'); 
             
-            // 增加一个短延迟，确保浏览器有足够时间处理 DOM 更新和渲染
-            await new Promise(resolve => setTimeout(resolve, 100));
+            // Add a short delay to ensure the browser has time to process DOM updates and rendering
+            await new Promise(resolve => setTimeout(resolve, 100)); 
+
+            isGameRunning = true; // Set to true immediately, ensuring updateTimer can execute
             
-            isGameRunning = true;
-            
-            try {
-                gameInterval = setInterval(updateTimer, 1000);
-                console.log("Game interval set with ID:", gameInterval);
+            try { // Add try-catch block to catch potential errors in setInterval
+                gameInterval = setInterval(updateTimer, 1000); // **Ensure this is set only once, with 1000ms interval**
+                console.log("Game interval set with ID:", gameInterval); // Print timer ID
             } catch (error) {
                 console.error("Failed to set gameInterval:", error);
-                isGameRunning = false;
-                gameOverlay.classList.remove('hidden');
+                // alert("Game failed to start: Timer could not be created. Check browser console.");
+                isGameRunning = false; // Reset state if start fails
+                gameOverlay.classList.remove('hidden'); // If start fails, re-show Overlay
                 return;
             }
             
             startNewMoveSequence();
-            
-            // 音乐播放逻辑
+
+            // Music playback logic remains unchanged
             if (isGameBgMusicPlaying) {
                 await loadAndPlayMusic(gameBgMusic, bgMusicSelector.value, true);
             }
-            
             relaxAudio.pause();
             console.log("startGame finished. Game is running.");
         }
-        
-        // 更新计时器
+
         function updateTimer() {
-            // 只有当游戏正在运行时才更新时间
-            if (!isGameRunning) {
-                if (gameInterval) {
+            // Only update time if the game is running
+            if (!isGameRunning) { 
+                if (gameInterval) { // If game stopped but timer is still running, clear it
                     clearInterval(gameInterval);
                     gameInterval = null;
                 }
-                console.log("updateTimer called but game is not running.");
+                console.log("updateTimer called but game is not running."); // Debug info
                 return;
             }
-            
             timeLeft--;
             timerElement.textContent = timeLeft;
-            console.log("Time left:", timeLeft, " (isGameRunning:", isGameRunning, ")");
-            
+            console.log("Time left:", timeLeft, " (isGameRunning:", isGameRunning, ")"); // Print time to console, observe changes
             if (timeLeft <= 0) {
                 endGame();
             }
         }
-        
-        // 开始新的招式序列
+
         function startNewMoveSequence() {
-            if (moveInterval) clearInterval(moveInterval);
-            
-            let currentLevelData = levels[0];
+            if (moveInterval) clearInterval(moveInterval); // Ensure old move timer is cleared
+            let currentLevelData = levels[0]; 
             for (let i = levels.length - 1; i >= 0; i--) {
                 if (score >= levels[i].scoreThreshold) {
                     currentLevelData = levels[i];
-                    level = i + 1;
+                    level = i + 1; 
                     break;
                 }
             }
-            
             levelElement.textContent = currentLevelData.name;
-            moveInterval = setInterval(showNextMove, currentLevelData.moveSpeed);
-            showNextMove();
+            moveInterval = setInterval(showNextMove, currentLevelData.moveSpeed); // Use current level's rhythm
+            showNextMove(); 
         }
-        
-        // 显示下一个招式
+
         function showNextMove() {
             if (!isGameRunning) return;
-            
-            clearTimeout(moveTimeout);
-            
+
+            clearTimeout(moveTimeout); 
+
             if (expectedMoveId !== null) {
-                handleWrongGuess(null);
+                handleWrongGuess(null); 
             }
             
-            masterMoveDisplay.classList.remove('show');
+            masterMoveDisplay.classList.remove('show'); 
             
             const randomIndex = Math.floor(Math.random() * moves.length);
             const nextMove = moves[randomIndex];
-            
+
             masterMoveEmoji.textContent = nextMove.emoji;
             masterMoveText.textContent = nextMove.text;
             masterMoveDisplay.classList.add('show');
             
-            expectedMoveId = nextMove.id;
-            
+            expectedMoveId = nextMove.id; 
+
             actionButtons.forEach(button => {
                 button.disabled = false;
                 button.classList.remove('correct', 'wrong');
             });
-            
+
             const currentLevelData = levels.find(l => score >= l.scoreThreshold) || levels[levels.length - 1];
-            
-            moveTimeout = setTimeout(() => {
-                if (expectedMoveId !== null && isGameRunning) {
+            moveTimeout = setTimeout(() => { 
+                if (expectedMoveId !== null && isGameRunning) { 
                     handleWrongGuess(null);
                 }
-            }, currentLevelData.moveSpeed - 200);
+            }, currentLevelData.moveSpeed - 200); 
         }
-        
-        // 处理玩家动作
+
         function handlePlayerAction(event) {
             console.log("Player action clicked. Expected:", expectedMoveId, "Clicked:", event.currentTarget.dataset.action);
-            
             if (!isGameRunning || expectedMoveId === null) {
                 console.log("Action ignored: Not running or no expected move.");
-                return;
+                return; 
             }
-            
-            clearTimeout(moveTimeout);
+
+            clearTimeout(moveTimeout); 
             
             const clickedAction = event.currentTarget.dataset.action;
-            const isCorrect = (clickedAction === expectedMoveId);
+            const isCorrect = (clickedAction === expectedMoveId); 
             
-            expectedMoveId = null;
-            masterMoveDisplay.classList.remove('show');
+            expectedMoveId = null; 
+            masterMoveDisplay.classList.remove('show'); 
             enableActionButtons(false);
-            
-            if (isCorrect) {
+
+            if (isCorrect) { 
                 console.log("Correct!");
-                score += (10 + combo * 2);
+                score += (10 + combo * 2); 
                 combo++;
-                
                 scoreElement.textContent = score;
-                comboElement.textContent = combo;
-                
+                comboElement.textContent = combo; 
+
                 if (combo > 1) {
-                    showFeedback(`连击 x${combo}!`, 'combo');
+                    showFeedback(`Combo x${combo}!`, 'combo');
                 } else {
-                    showFeedback('正确！', 'correct');
+                    showFeedback('Correct!', 'correct');
                 }
                 
-                const nextLevelThreshold = levels[level] ? levels[level].scoreThreshold : Infinity;
-                
+                const nextLevelThreshold = levels[level] ? levels[level].scoreThreshold : Infinity; 
                 if (score >= nextLevelThreshold) {
-                    level++;
+                    level++; 
                     levelElement.textContent = levels[level-1].name;
-                    startNewMoveSequence();
-                    showFeedback(`等级提升！`, 'combo');
+                    startNewMoveSequence(); 
+                    showFeedback(`Level Up!`, 'combo');
                 }
-            } else {
+            } else { 
                 console.log("Wrong!");
                 handleWrongGuess(event.currentTarget);
             }
         }
-        
-        // 处理错误猜测
+
         function handleWrongGuess(clickedButton) {
-            score = Math.max(0, score - 5);
-            combo = 0;
-            
+            score = Math.max(0, score - 5); 
+            combo = 0; 
             scoreElement.textContent = score;
-            comboElement.textContent = combo;
-            
-            showFeedback('错误！', 'wrong');
-            
+            comboElement.textContent = combo; 
+            showFeedback('Wrong!', 'wrong');
+
             if (clickedButton) {
-                clickedButton.classList.add('wrong');
+                clickedButton.classList.add('wrong'); 
             }
-            
-            expectedMoveId = null;
+            expectedMoveId = null; 
         }
-        
-        // 显示反馈
+
         function showFeedback(text, type) {
             feedbackDisplay.classList.remove('show', 'correct', 'wrong', 'combo');
             feedbackDisplay.textContent = text;
             feedbackDisplay.classList.add('show');
-            
             if (type) {
                 feedbackDisplay.classList.add(type);
             }
-            
+
             setTimeout(() => {
                 feedbackDisplay.classList.remove('show');
-            }, 1000);
+            }, 1000); 
         }
-        
-        // 启用/禁用动作按钮
+
         function enableActionButtons(enable) {
             actionButtons.forEach(button => {
                 button.disabled = !enable;
             });
         }
-        
-        // 结束游戏
+
         function endGame() {
             clearInterval(gameInterval);
             clearInterval(moveInterval);
-            clearTimeout(moveTimeout);
-            
+            clearTimeout(moveTimeout); 
             isGameRunning = false;
             enableActionButtons(false);
-            masterMoveDisplay.classList.remove('show');
-            expectedMoveId = null;
-            
+            masterMoveDisplay.classList.remove('show'); 
+            expectedMoveId = null; 
+
             gameBgMusic.pause();
-            gameBgMusic.currentTime = 0;
+            gameBgMusic.currentTime = 0; 
             isGameBgMusicPlaying = false;
             bgMusicIcon.classList.remove('fa-volume-mute');
             bgMusicIcon.classList.add('fa-volume-up');
-            
+
             gameOverlay.classList.remove('hidden');
-            gameOverlay.querySelector('h2').textContent = '练功结束！';
-            gameOverlay.querySelector('p').textContent = `你的最终分数是：${score} 分，大熊达到了 ${levelElement.textContent} 境界！`;
-            gameOverlay.querySelector('button').textContent = '再来一局';
+            gameOverlay.querySelector('h2').textContent = 'Training Ended!';
+            gameOverlay.querySelector('p').textContent = `Your final score is: ${score}, and Bear reached the ${levelElement.textContent} realm!`;
+            gameOverlay.querySelector('button').textContent = 'Play Again';
         }
-        
-        // ===== 事件监听器 =====
-        
+
+        // --- Event Listeners ---
         actionButtons.forEach(button => {
             button.addEventListener('click', handlePlayerAction);
         });
-        
+
         bgMusicToggle.addEventListener('click', async () => {
             if (gameBgMusic.paused) {
                 const success = await loadAndPlayMusic(gameBgMusic, bgMusicSelector.value, true);
@@ -1056,7 +981,6 @@
                     isGameBgMusicPlaying = true;
                     bgMusicIcon.classList.remove('fa-volume-mute');
                     bgMusicIcon.classList.add('fa-volume-up');
-                    
                     if (!relaxAudio.paused) {
                         relaxAudio.pause();
                     }
@@ -1068,7 +992,7 @@
                 bgMusicIcon.classList.add('fa-volume-mute');
             }
         });
-        
+
         bgMusicSelector.addEventListener('change', async (e) => {
             const newSrc = e.target.value;
             const wasPlaying = isGameBgMusicPlaying;
@@ -1079,7 +1003,6 @@
                 isGameBgMusicPlaying = true;
                 bgMusicIcon.classList.remove('fa-volume-mute');
                 bgMusicIcon.classList.add('fa-volume-up');
-                
                 if (!relaxAudio.paused) {
                     relaxAudio.pause();
                 }
@@ -1089,7 +1012,7 @@
                 bgMusicIcon.classList.add('fa-volume-mute');
             }
         });
-        
+
         relaxPlayButton.addEventListener('click', async () => {
             const success = await loadAndPlayMusic(relaxAudio, relaxMusicSelector.value, true);
             if (success) {
@@ -1101,15 +1024,15 @@
                 }
             }
         });
-        
+
         relaxPauseButton.addEventListener('click', () => {
             relaxAudio.pause();
         });
-        
+
         relaxVolumeSlider.addEventListener('input', () => {
             relaxAudio.volume = relaxVolumeSlider.value;
         });
-        
+
         relaxMusicSelector.addEventListener('change', async (e) => {
             const newSrc = e.target.value;
             const wasRelaxPlaying = !relaxAudio.paused;
@@ -1125,15 +1048,18 @@
                 }
             }
         });
-        
-        // ===== 初始设置 =====
+
+        // --- Initial Setup ---
         document.addEventListener('DOMContentLoaded', () => {
             populateMusicSelectors();
-            gameOverlay.classList.remove('hidden');
-            startButton.addEventListener('click', startGame);
-            resetGame();
+            gameOverlay.classList.remove('hidden'); 
+            startButton.addEventListener('click', startGame); 
+            resetGame(); 
         });
+
     </script>
 </body>
 </html>
+
+
 
