@@ -149,7 +149,7 @@
         /* 玩家操作按钮 */
         .player-controls {
             position: absolute; /* 保持绝对定位 */
-            bottom: 30px; /* 调整到大熊下方，并留出与音乐播放器的间距 */
+            bottom: -3px; /* 调整到大熊上方，并留出与音乐播放器的间距 */
             left: 50%;
             transform: translateX(-50%);
             /* 关键修改：改为2列布局，使其接近方形 */
@@ -394,10 +394,28 @@
                 width: 98%;
                 border-radius: 20px;
             }
-            .info-bar {
-                font-size: 1.2em;
-                padding: 10px 15px;
-            }
+                /* 信息栏基础样式 */
+         .info-bar {
+            padding: 2vh 4vw;  /* 视口单位，自动适应 */
+            font-size: min(4vw, 16px); /* 最大16px，自动缩小 */
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        .info-bar span {
+            margin: 0 max(5px, 1vw); /* 最小5px，按比例放大 */
+        }
+
+         .info-bar {
+            overflow-x: auto;  /* 允许水平滚动 */
+            -webkit-overflow-scrolling: touch; /* 手机平滑滚动 */
+        }
+
+        /* 隐藏滚动条 */
+        .info-bar::-webkit-scrollbar {
+            display: none;
+        }
+
             #master {
                 top: -10px; /* 手机端师傅进一步靠上，确保头部完全露出 */
                 font-size: 5em;
@@ -425,7 +443,7 @@
                 grid-template-columns: repeat(2, 1fr); /* 手机端维持2列 */
                 gap: 10px;
                 padding: 15px;
-                bottom: 150px; /* 手机端操作按钮大幅度上移，为音乐播放器和底部间距留出更多安全空间 */
+                bottom: -5px; /* 手机端操作按钮大幅度上移，为音乐播放器和底部间距留出更多安全空间 */
                 max-width: 200px; /* 限制手机端按钮区域宽度 */
             }
             .action-button {
@@ -1060,6 +1078,7 @@
     </script>
 </body>
 </html>
+
 
 
 
