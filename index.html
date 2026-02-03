@@ -745,7 +745,7 @@
             });
             if (relaxMusicList.length > 0) {
                 relaxAudio.src = relaxMusicList[0].src;
-               // relaxAudio.load();
+                relaxAudio.load();
             }
         }
 
@@ -788,8 +788,8 @@
             bgMusicIcon.classList.remove('fa-volume-mute');
             bgMusicIcon.classList.add('fa-volume-up');
 
-            relaxAudio.pause();
-            relaxAudio.currentTime = 0;
+           // relaxAudio.pause();
+           // relaxAudio.currentTime = 0;
         }
 
         async function startGame() {
@@ -1085,6 +1085,7 @@
     </script>
 </body>
 </html>
+
 
 
 
