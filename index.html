@@ -392,83 +392,101 @@
             max-width: 180px;
         }
 
-        /* 响应式调整 */
+          /* 响应式调整 */
         @media (max-width: 768px) {
             .game-container {
-                height: 95vh; /* 使用视口高度，确保适应不同手机屏幕，保留顶部状态栏和底部浏览器导航 */
+                height: 780px;
                 width: 98%;
                 border-radius: 20px;
             }
-                /* 信息栏基础样式 */
-         .info-bar {
-            padding: 2vh 4vw;  /* 视口单位，自动适应 */
-            font-size: min(4vw, 16px); /* 最大16px，自动缩小 */
-            box-sizing: border-box;
-            width: 100%;
-        }
+            
+            /* 信息栏基础样式 */
+ .info-bar {
+    padding: 2vh 4vw;  /* 视口单位，自动适应 */
+    font-size: min(4vw, 16px); /* 最大16px，自动缩小 */
+    box-sizing: border-box;
+    width: 100%;
+}
 
-        .info-bar span {
-            margin: 0 max(5px, 1vw); /* 最小5px，按比例放大 */
-        }
+.info-bar span {
+    margin: 0 max(5px, 1vw); /* 最小5px，按比例放大 */
+}
 
-         .info-bar {
-            overflow-x: auto;  /* 允许水平滚动 */
-            -webkit-overflow-scrolling: touch; /* 手机平滑滚动 */
-        }
+ .info-bar {
+    overflow-x: auto;  /* 允许水平滚动 */
+    -webkit-overflow-scrolling: touch; /* 手机平滑滚动 */
+}
 
-        /* 隐藏滚动条 */
-        .info-bar::-webkit-scrollbar {
-            display: none;
-        }
+/* 隐藏滚动条 */
+.info-bar::-webkit-scrollbar {
+    display: none;
+}
 
+            
             #master {
-                top: -10px; /* 手机端师傅进一步靠上，确保头部完全露出 */
+                top: -5px;
                 font-size: 5em;
             }
-            /* 大熊图标位置 */
+
+     .action-button {
+        width: 70px;
+        height: 70px;
+        font-size: 2.2em;
+    }
+    
+    .action-button span {
+        height: 30px;
+        font-size: 0.9em  !important;
+    }
+    
+    .action-button .text {
+        font-size: 0.6em;
+        line-height: 1.0;
+    }
+
             #bear {
-                top: 35%; /* 调整大熊位置，使其在师傅出招提示和连击提示之间，且能被看到 */
+                bottom: 100px;
                 font-size: 7em;
-                display: block; /* 恢复显示大熊 */
             }
+            
             .master-move-display {
-                top: 15%; /* 手机端师傅招式提示位置进一步上移，紧贴师傅 */
-                font-size: 3em;
-                padding: 10px 15px;
-                min-height: 60px;
+        top: 30%;
+        font-size: 3em;
+        padding: 8px 12px;
+        min-height: 50px;
+        min-width: 110px;   
+    }
+
+            
+            .player-controls {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                padding: 15px;
+                bottom: -5px;
+                max-width: 200px;
             }
+            
+            
             .feedback {
-                top: 25%; /* 手机端连击提示进一步上移，避免与masterMoveDisplay重叠，并确保在bear上方 */
                 font-size: 4em;
             }
+            
             .feedback.combo {
                 font-size: 5em;
             }
-            .player-controls {
-                grid-template-columns: repeat(2, 1fr); /* 手机端维持2列 */
-                gap: 10px;
-                padding: 15px;
-                bottom: 270px; /* 手机端操作按钮大幅度上移，为音乐播放器和底部间距留出更多安全空间 */
-                max-width: 200px; /* 限制手机端按钮区域宽度 */
-            }
-            .action-button {
-                width: 70px; /* 手机端按钮更小 */
-                height: 70px; /* 手机端按钮更小 */
-                font-size: 2.2em;
-            }
-            .action-button .text {
-                font-size: 0.4em;
-                line-height: 1.0;
-            }
+            
             .overlay {
                 font-size: 1.5em;
             }
+            
             .overlay h2 {
                 font-size: 1.2em;
             }
+            
             .overlay p {
                 font-size: 0.7em;
             }
+            
             .overlay button {
                 padding: 10px 20px;
                 font-size: 1.2em;
@@ -1085,6 +1103,7 @@
     </script>
 </body>
 </html>
+
 
 
 
