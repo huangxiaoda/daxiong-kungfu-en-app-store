@@ -25,14 +25,17 @@
   Paddle.Initialize({ token: 'live_9a9f986b6854d9b8cf44cb78dc1' });
 
   // 当用户点击购买时
-  function openPaddleCheckout(){
-    Paddle.Checkout.open({
-      items: [
-        {
-          priceId: 'pri_01khtvpwwzc7z382xcqbbbrj5t', 
-          quantity: 1
+    // 支付函数 
+        function launchPaddleCheckout() {
+            const PURCHASE_ITEM = [{
+                priceId: "pri_01khtvpwwzc7z382xcqbbbrj5t",
+                quantity: 1
+            }];
+            Paddle.Checkout.open({
+                items: PURCHASE_ITEM
+            });
         }
-      ],
+
       customData: {
         userId: '当前用户ID' // 可选，用于后续对账
       },
@@ -43,8 +46,19 @@
     });
   }
 
- // 绑定点击事件
-  document.getElementById('paypal-button-container').innerHTML = '<button onclick="openPaddleCheckout()">购买</button>';
+  // 添加购买按钮事件监听
+    const purchaseButton = document.getElementById('purchaseButton');
+    if (purchaseButton) {
+        purchaseButton.addEventListener('click', 
+        launchPaddleCheckout); 
+        console.log('✅ 购买按钮绑定成功');
+    } else {
+        console.warn('⚠️ 未找到购买按钮');
+    }
+    
+    resetGame();
+});
+
 </script>
   
     <style>
@@ -1249,6 +1263,7 @@
     </script>
 </body>
 </html>
+
 
 
 
