@@ -21,16 +21,16 @@
 <div id="paddle-button"></div>
 
 <script>
-  // 初始化 Paddle（用你的 client-side token）
+  // 初始化 Paddle
   Paddle.Environment.set('production'); 
-  Paddle.Initialize({ token: '你的_client_side_token' });
+  Paddle.Initialize({ token: 'live_9a9f986b6854d9b8cf44cb78dc1' });
 
   // 当用户点击购买时
   function openPaddleCheckout() {
     Paddle.Checkout.open({
       items: [
         {
-          priceId: 'pri_your_price_id', // 需要在 Paddle 后台创建商品后获取
+          priceId: 'pri_01khtvpwwzc7z382xcqbbbrj5t', 
           quantity: 1
         }
       ],
@@ -1221,6 +1221,7 @@
     </script>
 </body>
 </html>
+
 
 
 
