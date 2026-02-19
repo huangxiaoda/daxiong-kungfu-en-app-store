@@ -14,36 +14,37 @@
     <link href="https://fonts.googleapis.com/css2?family=Zhi+Mang+Xing&family=Press+Start+2P&display=swap" rel="stylesheet">
     <!-- Font Awesome for speaker icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">  
-    <!-- 引入 PayPal JS SDK，替换 YOUR_CLIENT_ID 为刚才复制的 Sandbox Client ID -->
-<script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID&currency=USD"></script>
+      <!-- 引入 Paddle.js -->
+<script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
 
-<!-- 放置按钮的容器 -->
-<div id="paypal-button-container"></div>
+<!-- 放置支付按钮的容器 -->
+<div id="paddle-button"></div>
 
 <script>
-  paypal.Buttons({
-    // 设置交易
-    createOrder: function(data, actions) {
-      return actions.order.create({
-        purchase_units: [{
-          amount: {
-            value: '0.01'  // 测试金额，可以设为 0.01 美元
-          }
-        }]
-      });
-    },
-    // 支付完成后的回调
-    onApprove: function(data, actions) {
-      return actions.order.capture().then(function(details) {
-        // 支付成功后的逻辑
-        alert('支付成功！' + details.payer.name.given_name);
-        // 可以在这里通知 uni-app 支付完成，例如用 postMessage 或跳转回 App
-        // 对于 return URL，PayPal 会自动跳转回你在后台设置的 URL，所以这里可以不加额外代码
-      });
-    }
-  }).render('#paypal-button-container');  // 渲染按钮到容器
+  // 初始化 Paddle（用你的 client-side token）
+  Paddle.Environment.set('production'); 
+  Paddle.Initialize({ token: '你的_client_side_token' });
+
+  // 当用户点击购买时
+  function openPaddleCheckout() {
+    Paddle.Checkout.open({
+      items: [
+        {
+          priceId: 'pri_your_price_id', // 需要在 Paddle 后台创建商品后获取
+          quantity: 1
+        }
+      ],
+      customData: {
+        userId: '当前用户ID' // 可选，用于后续对账
+      },
+      settings: {
+        successUrl: 'com.daxiongkungfu.lite://payment-success', // 支付成功返回 App
+        // 注意：Paddle 的 return URL 是在这里配置，不是在后台
+      }
+    });
+  }
 </script>
-    
+  
     <style>
          /* 页面整体样式 */
         body {
@@ -1220,6 +1221,7 @@
     </script>
 </body>
 </html>
+
 
 
 
