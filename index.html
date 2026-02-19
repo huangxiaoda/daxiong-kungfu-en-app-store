@@ -26,7 +26,7 @@
   Paddle.Initialize({ token: 'live_9a9f986b6854d9b8cf44cb78dc1' });
 
   // 当用户点击购买时
-  function launchPaddleCheckout(){
+  function openPaddleCheckout(){
     Paddle.Checkout.open({
       items: [
         {
@@ -43,6 +43,9 @@
       }
     });
   }
+
+ // 绑定点击事件
+  document.getElementById('paypal-button-container').innerHTML = '<button onclick="openPaddleCheckout()">购买</button>';
 </script>
   
     <style>
@@ -1221,6 +1224,7 @@
     </script>
 </body>
 </html>
+
 
 
 
