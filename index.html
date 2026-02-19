@@ -22,7 +22,7 @@
 
   // 初始化 Paddle
   Paddle.Environment.set('production'); 
-  Paddle.Initialize({ token: 'live_9a9f986b6854d9b8cf44cb78dc1' });
+  Paddle.Initialize({token: 'live_9a9f986b6854d9b8cf44cb78dc1'});
 
   // 当用户点击购买时
     // 支付函数 
@@ -42,9 +42,8 @@
       settings: {
         successUrl: 'com.daxiongkungfu.lite://payment-success', // 支付成功返回 App
         // 注意：Paddle 的 return URL 是在这里配置，不是在后台
-      }
-    });
-  }
+    };
+  
 
   // 添加购买按钮事件监听
     const purchaseButton = document.getElementById('purchaseButton');
@@ -57,7 +56,6 @@
     }
     
     resetGame();
-});
 
 </script>
   
@@ -1263,6 +1261,7 @@
     </script>
 </body>
 </html>
+
 
 
 
