@@ -276,6 +276,18 @@
             opacity: 0;
             pointer-events: none;
         }
+        /* 新增：支付按钮样式（与 start 按钮类似，但稍小一点） */
+        #purchaseButton {
+            background-color: #4caf50;
+            font-size: 1.2em;
+            padding: 10px 20px;
+        }
+        #purchaseButton.purchased {
+            background-color: #888;
+            cursor: default;
+            opacity: 0.7;
+        }
+
         /* 放松音乐播放器样式 */
         .relax-music-player {
             width: calc(100% - 40px);
@@ -606,7 +618,9 @@
             <h2>Bear Kung Fu Challenge!</h2>
             <p>Watch the master demonstrate, then quickly tap the correct move!</p>
             <button id="startButton">Start Training</button>
-            <div id="paddle-button-container"></div>
+             <!-- 新增支付按钮 -->
+            <button id="purchaseButton">解锁高级版 (6.99 USD)</button>
+
         </div>
     </div>
     <script>
@@ -1065,13 +1079,9 @@
     Paddle.Initialize({ 
       token: 'YOUR_CLIENT_SIDE_TOKEN' // 替换为你的 test_xxx 或 prod_xxx 令牌
     });
-
-    // 生成一个简单的按钮
-    document.getElementById('paddle-button-container').innerHTML = 
-      '<button onclick="openPaddleCheckout()" style="padding: 12px 24px; background: #0070e0; color: white; border: none; border-radius: 4px;">购买游戏币</button>';
-  });
-
-  // 4. 打开支付页面的函数
+    }
+ 
+    // 4. 打开支付页面的函数
   function openPaddleCheckout() {
     Paddle.Checkout.open({
       items: [
@@ -1099,6 +1109,7 @@
   
 </body>
 </html>
+
 
 
 
