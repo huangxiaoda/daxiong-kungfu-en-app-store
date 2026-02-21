@@ -331,6 +331,12 @@
         }
 
         async function startGame() {
+           // 检查是否已付费
+        if (!isPremium) {
+            // 如果未付费，直接打开支付页面
+            openPaddleCheckout();
+            return; // 不继续执行游戏启动逻辑
+            }
             console.log("startGame called.");
             if (isGameRunning) {
                 console.log("Game is already running or starting, ignoring duplicate call.");
@@ -623,6 +629,8 @@
             updatePurchaseUI();
             // 可选：显示一个成功提示
             alert('购买成功！感谢支持！'); // 简单提示，可自行替换为游戏内反馈
+             // 支付成功后自动开始游戏
+            startGame(); 
         };
 
         // 检查URL参数（如果支付页面重定向回当前页）
@@ -672,6 +680,7 @@
   
 </body>
 </html>
+
 
 
 
