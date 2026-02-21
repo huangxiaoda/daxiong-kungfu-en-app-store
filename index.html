@@ -1077,16 +1077,16 @@
   document.addEventListener('DOMContentLoaded', function() {
     // 初始化 Paddle，用你的 Client-side Token
     Paddle.Initialize({ 
-      token: 'YOUR_CLIENT_SIDE_TOKEN' // 替换为你的 test_xxx 或 prod_xxx 令牌
+      token: 'live_9a9f986b6854d9b8cf44cb78dc1' // 替换为你的 test_xxx 或 prod_xxx 令牌
     });
-    }
+    },
  
     // 4. 打开支付页面的函数
   function openPaddleCheckout() {
     Paddle.Checkout.open({
       items: [
         {
-          priceId: 'YOUR_PRICE_ID', // 替换为你的 pri_xxx 商品 ID
+          priceId: 'pri_01khtvpwwzc7z382xcqbbbrj5t', // 替换为你的 pri_xxx 商品 ID
           quantity: 1
         }
       ],
@@ -1109,6 +1109,7 @@
   
 </body>
 </html>
+
 
 
 
