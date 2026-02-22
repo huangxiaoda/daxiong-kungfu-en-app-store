@@ -608,15 +608,6 @@
             }
         }
 
-        // 打开Paddle支付页面
-        function openPaddleCheckout() {
-            const checkoutUrl = new URL(PADDLE_CHECKOUT_URL);
-            checkoutUrl.searchParams.append('app_user_id', appUserId);
-            checkoutUrl.searchParams.append('redirect_scheme', APP_SCHEME);
-            // 可选传递商品ID
-            window.location.href = checkoutUrl.toString();
-        }
-
         // 支付成功回调（供原生App调用）
         window.purchaseSuccess = function(transactionId) {
             console.log('Purchase success! Transaction ID:', transactionId);
@@ -679,6 +670,7 @@
   
 </body>
 </html>
+
 
 
 
