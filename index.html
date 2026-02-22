@@ -608,6 +608,14 @@
             }
         }
 
+          // 正确的支付跳转函数（唯一版本）
+        function openPaddleCheckout() {
+            const payUrl = new URL('/pay.html', window.location.origin);
+            payUrl.searchParams.append('app_user_id', appUserId);
+            payUrl.searchParams.append('redirect_scheme', APP_SCHEME);
+            window.location.href = payUrl.toString();
+        }  
+       
         // 支付成功回调（供原生App调用）
         window.purchaseSuccess = function(transactionId) {
             console.log('Purchase success! Transaction ID:', transactionId);
@@ -670,6 +678,7 @@
   
 </body>
 </html>
+
 
 
 
