@@ -647,7 +647,14 @@
         // 购买按钮点击事件
         purchaseButton.addEventListener('click', () => {
             if (!isPremium) {
-                openPaddleCheckout();
+         function openPaddleCheckout() {
+        // 构建支付页面的 URL，带上参数
+        const payUrl = new URL('https://lite.daxiongkungfu.com/pay.html');
+        payUrl.searchParams.append('app_user_id', appUserId);
+        payUrl.searchParams.append('redirect_scheme', 'daxiongkungfu://'); // 你的 App Scheme
+        // 跳转到支付页面（在 Safari View Controller 中打开）
+        window.location.href = payUrl.toString();
+        }
             }
         });
 
@@ -680,6 +687,7 @@
   
 </body>
 </html>
+
 
 
 
