@@ -31,7 +31,6 @@
             color: #666;
         }
     </style>
-    <!-- 加载 Paddle.js -->
     <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
 </head>
 <body>
@@ -41,29 +40,34 @@
     </div>
 
     <script>
-        // 从 URL 获取参数
-        const urlParams = new URLSearchParams(window.location.search);
-        const appUserId = urlParams.get('app_user_id') || 'guest_' + Math.random().toString(36).substr(2, 9);
-        const redirectScheme = urlParams.get('redirect_scheme') || 'daxiongkungfu://';
-
-        // 配置 Paddle（使用你的客户端令牌和价格 ID）
-        const CLIENT_TOKEN = 'live_9a9f986b6854d9b8cf44cb78dc1'; // 从 Paddle 后台获取
+        // 替换为你的实际客户端令牌（从 Paddle 后台获取，以 live_ 开头）
+        const CLIENT_TOKEN = 'live_9a9f986b6854d9b8cf44cb78dc1'; 
         const PRICE_ID = 'pri_01khtvpwwzc7z382xcqbbbrj5t'; // 你的价格 ID
 
-        // 初始化 Paddle
-        Paddle.Initialize({ token: CLIENT_TOKEN, environment: 'production' });
+        // 获取 URL 参数
+        const urlParams = new URLSearchParams(window.location.search);
+        const appUserId = urlParams.get('app_user_id') || 'guest_' + Math.random().toString(36).substr(2, 9);
+        const redirectScheme = urlParams.get('redirect_scheme') || 'com.daxiongkungfu.lite://';
 
-        // 立即打开结账界面
+        // 初始化 Paddle（注意：environment 直接传给 Initialize）
+        Paddle.Initialize({
+            token: CLIENT_TOKEN,
+            environment: 'production' // 正式环境，测试时可临时改为 'sandbox'
+        });
+
+        // 打开结账
         Paddle.Checkout.open({
-        items: [{ priceId: PRICE_ID, quantity: 1 }],
-        customer: { id: appUserId },
-        successCallback: (data) => {
-            window.location.href = redirectScheme + '?transaction_id=' + data.transactionId;
-        },
-        closeCallback: () => {
-            window.location.href = 'https://lite.daxiongkungfu.com'; // 返回游戏主页
-        }
-    });
+            items: [{ priceId: PRICE_ID, quantity: 1 }],
+            customer: { id: appUserId },
+            successCallback: (data) => {
+                // 支付成功，跳回 App
+                window.location.href = redirectScheme + '?transaction_id=' + data.transactionId + '&paddle_success=1';
+            },
+            closeCallback: () => {
+                // 用户关闭支付窗口，返回游戏首页
+                window.location.href = 'https://lite.daxiongkungfu.com';
+            }
+        });
     </script>
 </body>
 </html>
