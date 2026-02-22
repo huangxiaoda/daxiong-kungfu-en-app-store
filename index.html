@@ -588,7 +588,6 @@
 
         // ==================== 新增：Paddle支付集成（最小化修改） ====================
         // 支付配置 - 请替换为您的实际支付页面域名和App Scheme
-        const PADDLE_CHECKOUT_URL = "https://lite.daxiongkungfu.com"; 
         const APP_SCHEME = "com.daxiongkungfu.lite://"; // 替换为App URL Scheme
 
         // 购买按钮
@@ -645,14 +644,6 @@
         }
 
         // 购买按钮点击事件
-         function openPaddleCheckout() {
-        // 构建支付页面的 URL，带上参数
-        const payUrl = new URL('https://lite.daxiongkungfu.com/pay.html');
-        payUrl.searchParams.append('app_user_id', appUserId);
-        payUrl.searchParams.append('redirect_scheme', 'daxiongkungfu://'); // 你的 App Scheme
-        // 跳转到支付页面（在 Safari View Controller 中打开）
-        window.location.href = payUrl.toString();
-        }
           purchaseButton.addEventListener('click', () => {
             if (!isPremium) { 
                 openPaddleCheckout();  //调用函数
@@ -688,6 +679,7 @@
   
 </body>
 </html>
+
 
 
 
