@@ -55,18 +55,15 @@
 
         // 立即打开结账界面
         Paddle.Checkout.open({
-            items: [{ priceId: PRICE_ID, quantity: 1 }],
-            customer: { id: appUserId }, // 可选，关联用户
-            successCallback: (data) => {
-                // 支付成功，跳转回 App
-                const returnUrl = redirectScheme + '?transaction_id=' + data.transactionId;
-                window.location.href = returnUrl;
-            },
-            closeCallback: () => {
-                // 用户关闭了支付窗口，可以跳转回游戏（或其他处理）
-                window.location.href = 'https://lite.daxiongkungfu.com';
-            }
-        });
+        items: [{ priceId: PRICE_ID, quantity: 1 }],
+        customer: { id: appUserId },
+        successCallback: (data) => {
+            window.location.href = redirectScheme + '?transaction_id=' + data.transactionId;
+        },
+        closeCallback: () => {
+            window.location.href = 'https://lite.daxiongkungfu.com'; // 返回游戏主页
+        }
+    });
     </script>
 </body>
 </html>
