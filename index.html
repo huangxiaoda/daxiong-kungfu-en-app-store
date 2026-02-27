@@ -586,98 +586,15 @@
             }
         });
 
-        // ==================== 新增：Paddle支付集成（最小化修改） ====================
-        // 支付配置 - 请替换为您的实际支付页面域名和App Scheme
-        const APP_SCHEME = "com.daxiongkungfu.lite://"; // 替换为App URL Scheme
-
-        // 购买按钮
-        const purchaseButton = document.getElementById('purchaseButton');
-        let isPremium = localStorage.getItem('isPremium') === 'true'; // 购买状态
-        let appUserId = localStorage.getItem('appUserId') || 'guest_' + Math.random().toString(36).substr(2, 9);
-
-        // 更新购买按钮UI
-        function updatePurchaseUI() {
-            if (isPremium) {
-                purchaseButton.textContent = '✅ 已解锁';
-                purchaseButton.disabled = true;
-                purchaseButton.classList.add('purchased');
-            } else {
-                purchaseButton.textContent = '解锁高级版 (6.99 USD)';
-                purchaseButton.disabled = false;
-                purchaseButton.classList.remove('purchased');
-            }
-        }
-
-          // 正确的支付跳转函数（唯一版本）
-        function openPaddleCheckout() {
-            const payUrl = new URL('/pay.html', window.location.origin);
-            payUrl.searchParams.append('app_user_id', appUserId);
-            payUrl.searchParams.append('redirect_scheme', APP_SCHEME);
-            window.location.href = payUrl.toString();
-        }  
-       
-        // 支付成功回调（供原生App调用）
-        window.purchaseSuccess = function(transactionId) {
-            console.log('Purchase success! Transaction ID:', transactionId);
-            isPremium = true;
-            localStorage.setItem('isPremium', 'true');
-            if (transactionId) {
-                localStorage.setItem('lastTransactionId', transactionId);
-            }
-            updatePurchaseUI();
-            // 可选：显示一个成功提示
-            alert('购买成功！感谢支持！'); // 简单提示，可自行替换为游戏内反馈
-             // 支付成功后自动开始游戏
-            startGame(); 
-        };
-
-        // 检查URL参数（如果支付页面重定向回当前页）
-        function checkForPurchaseResult() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const transactionId = urlParams.get('transaction_id');
-            const success = urlParams.get('paddle_success');
-            if (success === '1' && transactionId) {
-                window.history.replaceState({}, document.title, window.location.pathname);
-                window.purchaseSuccess(transactionId);
-            }
-        }
-
-        // 购买按钮点击事件
-          purchaseButton.addEventListener('click', () => {
-            if (!isPremium) { 
-                openPaddleCheckout();  
-            }
-        });
-
-        // 保存用户ID
-        if (!localStorage.getItem('appUserId')) {
-            localStorage.setItem('appUserId', appUserId);
-        }
-
-        // 初始化时检查购买状态和URL参数
-        document.addEventListener('DOMContentLoaded', () => {
-            // 原有初始化
-            populateMusicSelectors();
-            gameOverlay.classList.remove('hidden');
-            startButton.addEventListener('click', startGame);
-            resetGame();
-            // 支付初始化
-            updatePurchaseUI();
-            checkForPurchaseResult();
-        });
+      
 
     </script>
 
-
-
-    <div class="footer-links">
-    <a href="terms.html">服务条款</a>|  
-    <a href="/privacy.html">隐私政策</a>| 
-    <a href="/refund.html">退款政策</a>
 </div>
   
 </body>
 </html>
+
 
 
 
