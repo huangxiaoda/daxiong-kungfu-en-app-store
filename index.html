@@ -739,8 +739,7 @@
 
     <script>
        
-       // 在文件开头添加支付相关变量
-let hasPurchased = false; // 记录是否已购买
+      // ==================== 支付相关代码 ====================
 
 // 检测是否在iOS设备上
 function isIOSDevice() {
@@ -756,11 +755,10 @@ function isApplePayAvailable() {
 function handlePurchaseSuccess() {
     console.log("支付成功，准备开始游戏");
     
-    hasPurchased = true;
-    
-    // 隐藏支付按钮
+    // 隐藏支付按钮容器（整个移除，避免重复点击）
     const applePayContainer = document.getElementById('applePayButton');
     if (applePayContainer) {
+        applePayContainer.innerHTML = ''; // 清空内容
         applePayContainer.style.display = 'none';
     }
     
@@ -768,146 +766,32 @@ function handlePurchaseSuccess() {
     const purchaseStatus = document.getElementById('purchaseStatus');
     purchaseStatus.style.display = 'block';
     
-    // 延迟一点让用户看到成功提示，然后自动开始游戏
+    // 延迟1秒后自动开始游戏
     setTimeout(async function() {
-        // 直接调用你原有的 startGame 函数
+        console.log("自动调用 startGame()");
         if (typeof startGame === 'function') {
-            console.log("自动调用 startGame()");
-            await startGame(); // 注意这里是 async 调用
+            await startGame();
         } else {
-            console.error("startGame 函数未找到");
+            console.error("错误：找不到 startGame 函数！");
         }
-    }, 1000); // 延迟1秒，让用户看到支付成功提示
+    }, 1000);
 }
-
-// 页面加载完成后初始化
-document.addEventListener('DOMContentLoaded', function() {
-    console.log("页面加载完成，初始化支付按钮");
-    
-    const applePayContainer = document.getElementById('applePayButton');
-    const startButton = document.getElementById('startButton');
-    const purchaseStatus = document.getElementById('purchaseStatus');
-    
-    // 如果是iOS设备且支持Apple Pay
-    if (isIOSDevice() && isApplePayAvailable()) {
-        console.log("iOS设备支持Apple Pay，显示支付按钮");
-        
-        // 创建Apple Pay样式的按钮（由于不能用PKPaymentButton，我们模拟样式）
-        const applePayBtn = document.createElement('button');
-        applePayBtn.id = 'applePayBtn';
-        applePayBtn.innerHTML = '💳 Apple Pay 购买完整课程 <span style="font-size: 20px; font-weight: bold;">$6.99</span>';
-        applePayBtn.style.cssText = `
-            background: black;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            padding: 16px 32px;
-            font-size: 18px;
-            font-weight: 500;
-            cursor: pointer;
-            margin: 10px 0;
-            width: 100%;
-            max-width: 320px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.2s, opacity 0.2s;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        `;
-        
-        // 添加悬停效果（仅桌面设备）
-        applePayBtn.onmouseover = function() {
-            this.style.transform = 'scale(1.02)';
-        };
-        applePayBtn.onmouseout = function() {
-            this.style.transform = 'scale(1)';
-        };
-        
-        // 添加点击事件
-        applePayBtn.addEventListener('click', async function() {
-            console.log("Apple Pay 按钮被点击");
-            
-            // 防止重复点击
-            if (this.disabled) return;
-            
-            // 禁用按钮，显示支付中状态
-            this.disabled = true;
-            this.style.opacity = '0.7';
-            this.innerHTML = '⏳ 正在连接Apple Pay...';
-            
-            try {
-                // 这里模拟Apple Pay支付流程
-                // 实际开发中，这里需要调用原生Apple Pay代码
-                // 我们用一个Promise来模拟异步支付过程
-                await simulateApplePayPayment();
-                
-                // 支付成功后调用处理函数
-                handlePurchaseSuccess();
-                
-            } catch (error) {
-                console.error("支付失败:", error);
-                // 恢复按钮状态
-                this.disabled = false;
-                this.style.opacity = '1';
-                this.innerHTML = '💳 Apple Pay 购买课程 $6.99';
-                
-                // 显示错误提示
-                alert("支付失败，请重试。错误：" + error.message);
-            }
-        });
-        
-        applePayContainer.appendChild(applePayBtn);
-        
-        // 添加Apple Pay标志说明
-        const applePayNote = document.createElement('p');
-        applePayNote.style.cssText = `
-            color: #666;
-            font-size: 12px;
-            margin-top: 5px;
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-        `;
-        applePayNote.innerHTML = '🔒 安全支付 · 使用Touch ID/Face ID验证';
-        applePayContainer.appendChild(applePayNote);
-        
-    } else {
-        console.log("设备不支持Apple Pay，直接显示开始按钮");
-        
-        // 非iOS设备或不支持Apple Pay，直接显示开始按钮
-        startButton.style.display = 'inline-block';
-        
-        // 添加提示信息
-        const tip = document.createElement('p');
-        tip.style.cssText = `
-            color: #999;
-            font-size: 14px;
-            margin-top: 10px;
-            font-style: italic;
-        `;
-        tip.textContent = '💡 提示：在iPhone/iPad上使用Apple Pay解锁完整功夫课程 ($6.99)';
-        applePayContainer.appendChild(tip);
-    }
-
-    // 原有的开始按钮点击事件（保持不变）
-    startButton.addEventListener('click', function() {
-        console.log("开始按钮被点击，手动启动游戏");
-        if (typeof startGame === 'function') {
-            startGame();
-        }
-    });
-});
 
 // 模拟Apple Pay支付流程
 function simulateApplePayPayment() {
     return new Promise((resolve, reject) => {
         console.log("模拟Apple Pay支付流程...");
         
-        // 显示一个友好的提示（在实际原生Apple Pay中，这里会弹出系统支付界面）
+        // 创建支付中界面
         const overlay = document.createElement('div');
+        overlay.id = 'paymentOverlay';
         overlay.style.cssText = `
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.85);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -921,10 +805,11 @@ function simulateApplePayPayment() {
                 border-radius: 20px;
                 text-align: center;
                 max-width: 300px;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.3);
             ">
                 <div style="font-size: 50px; margin-bottom: 20px;">💳</div>
                 <h3 style="margin: 0 0 10px 0; color: #333;">正在处理支付</h3>
-                <p style="color: #666; margin: 0 0 20px 0;">金额: $6.99</p >
+                <p style="color: #666; margin: 0 0 20px 0; font-size: 24px; font-weight: bold;">$6.99</p >
                 <div style="color: #4CAF50; margin-bottom: 15px;">请使用Touch ID/Face ID验证</div>
                 <div style="width: 50px; height: 50px; border: 3px solid #f3f3f3; border-top: 3px solid #3498db; border-radius: 50%; margin: 0 auto; animation: spin 1s linear infinite;"></div>
             </div>
@@ -937,21 +822,143 @@ function simulateApplePayPayment() {
         `;
         document.body.appendChild(overlay);
         
-        // 模拟支付处理时间（1.5秒后成功）
+        // 模拟支付处理
         setTimeout(() => {
-            document.body.removeChild(overlay);
-            
-            // 90%概率成功，10%概率失败（用于测试）
-            if (Math.random() < 0.9) {
-                console.log("模拟支付成功");
-                resolve();
-            } else {
-                console.log("模拟支付失败");
-                reject(new Error("支付被取消"));
+            // 移除支付界面
+            const existingOverlay = document.getElementById('paymentOverlay');
+            if (existingOverlay) {
+                document.body.removeChild(existingOverlay);
             }
+            
+            // 模拟成功（实际开发中这里会有真实支付结果）
+            resolve();
         }, 1500);
     });
 }
+
+// ==================== 页面初始化 ====================
+
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("页面加载完成，初始化...");
+    
+    const applePayContainer = document.getElementById('applePayButton');
+    const startButton = document.getElementById('startButton');
+    const purchaseStatus = document.getElementById('purchaseStatus');
+    
+    // 确保所有元素都存在
+    if (!applePayContainer || !startButton || !purchaseStatus) {
+        console.error("错误：找不到必要的DOM元素！");
+        return;
+    }
+    
+    // 检查是否支持Apple Pay
+    if (isIOSDevice() && isApplePayAvailable()) {
+        console.log("iOS设备支持Apple Pay，显示支付按钮");
+        
+        // 清空容器，确保没有重复按钮
+        applePayContainer.innerHTML = '';
+        applePayContainer.style.display = 'block';
+        
+        // 创建Apple Pay按钮
+        const applePayBtn = document.createElement('button');
+        applePayBtn.id = 'applePayBtn';
+        applePayBtn.innerHTML = '💰 Pay 购买完整课程 <span style="font-size: 24px; font-weight: bold;">$6.99</span>';
+        applePayBtn.style.cssText = `
+            background: black;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 18px 36px;
+            font-size: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            margin: 15px 0;
+            width: 100%;
+            max-width: 350px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: all 0.2s;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0.5px;
+        `;
+        
+        // 按钮悬停效果
+        applePayBtn.onmouseover = function() {
+            this.style.transform = 'scale(1.02)';
+            this.style.boxShadow = '0 6px 15px rgba(0,0,0,0.25)';
+        };
+        applePayBtn.onmouseout = function() {
+            this.style.transform = 'scale(1)';
+            this.style.boxShadow = '0 4px 10px rgba(0,0,0,0.2)';
+        };
+        
+        // 添加点击事件 - 只处理支付，不启动游戏
+        applePayBtn.addEventListener('click', async function(e) {
+            e.stopPropagation(); // 阻止事件冒泡
+            
+            console.log("Apple Pay 按钮被点击");
+            
+            // 防止重复点击
+            if (this.disabled) return;
+            
+            // 禁用按钮，显示支付中状态
+            this.disabled = true;
+            this.style.opacity = '0.7';
+            this.innerHTML = '⏳ 正在连接Apple Pay...';
+            
+            try {
+                // 模拟支付流程
+                await simulateApplePayPayment();
+                
+                // 支付成功后调用处理函数（这个函数会启动游戏）
+                await handlePurchaseSuccess();
+                
+            } catch (error) {
+                console.error("支付失败:", error);
+                
+                // 恢复按钮状态
+                this.disabled = false;
+                this.style.opacity = '1';
+                this.innerHTML = '💰 Pay 购买完整课程 <span style="font-size: 24px; font-weight: bold;">$6.99</span>';
+                
+                // 显示错误提示
+                alert("支付失败，请重试。错误：" + error.message);
+            }
+        });
+        
+        applePayContainer.appendChild(applePayBtn);
+        
+        // 添加安全支付提示
+        const securityNote = document.createElement('p');
+        securityNote.style.cssText = `
+            color: #666;
+            font-size: 13px;
+            margin: 5px 0 0 0;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        `;
+        securityNote.innerHTML = '🔒 安全支付 · 使用 Touch ID/Face ID 验证';
+        applePayContainer.appendChild(securityNote);
+        
+        // 确保开始按钮是隐藏的
+        startButton.style.display = 'none';
+        
+    } else {
+        console.log("设备不支持Apple Pay，显示开始按钮");
+        
+        // 非iOS设备，隐藏支付区域，显示开始按钮
+        applePayContainer.style.display = 'none';
+        startButton.style.display = 'inline-block';
+    }
+    
+    // 原有的开始按钮点击事件（仅当手动点击时触发）
+    startButton.addEventListener('click', async function(e) {
+        e.stopPropagation();
+        console.log('开始按钮被手动点击');
+        
+        if (typeof startGame === 'function') {
+            await startGame();
+        }
+    });
+});
       
         // 元素获取
         const timerElement = document.getElementById('timer');
@@ -1435,6 +1442,7 @@ function simulateApplePayPayment() {
     </script>
 </body>
 </html>
+
 
 
 
