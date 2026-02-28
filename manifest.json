@@ -1,7 +1,7 @@
 {
-  "name": "大熊学武功：功夫节奏挑战",
+  "name": "Daxiong Kung Fu：Kung Fu Rhythm Challenge",
   "short_name": "Daxiong Kung Fu",
-  "description": "一款节奏感十足的功夫挑战游戏，看师傅演示，快速点击对应招式！",
+  "description": "A rhythmic kung fu challenge game. Watch the master's demonstration and quickly click on the corresponding moves！",
   "start_url": "/",
   "display": "fullscreen",
   "theme_color": "#558b2f",
@@ -22,4 +22,5 @@
   "categories": ["games", "education", "entertainment"],
   "lang": "zh-CN"
 }
+
 
