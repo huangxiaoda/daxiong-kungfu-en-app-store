@@ -726,7 +726,7 @@
             <p>Watch the master demonstrate, then quickly tap the correct move!</p>
               <!-- 新增：支付状态显示（初始隐藏） -->
     <div id="purchaseStatus" style="display: none; color: #4CAF50; margin: 10px 0; font-weight: bold;">
-        ✅ 支付成功！正在加载功夫游戏...
+        ✅ Purchase successful! Loading Kung Fu course...
     </div>
     
     <!-- 新增：Apple Pay 按钮容器 -->
@@ -753,7 +753,7 @@ function isApplePayAvailable() {
 
 // 支付成功后的处理函数
 function handlePurchaseSuccess() {
-    console.log("支付成功，准备开始游戏");
+    console.log("Payment successful, starting game");
     
     // 隐藏支付按钮容器（整个移除，避免重复点击）
     const applePayContainer = document.getElementById('applePayButton');
@@ -808,9 +808,9 @@ function simulateApplePayPayment() {
                 box-shadow: 0 20px 40px rgba(0,0,0,0.3);
             ">
                 <div style="font-size: 50px; margin-bottom: 20px;">💳</div>
-                <h3 style="margin: 0 0 10px 0; color: #333;">正在处理支付</h3>
+                <h3 style="margin: 0 0 10px 0; color: #333;">Processing Payment</h3>
                 <p style="color: #666; margin: 0 0 20px 0; font-size: 24px; font-weight: bold;">$6.99</p >
-                <div style="color: #4CAF50; margin-bottom: 15px;">请使用Touch ID/Face ID验证</div>
+                <div style="color: #4CAF50; margin-bottom: 15px;">Please authenticate with Touch ID / Face ID</div>
                 <div style="width: 50px; height: 50px; border: 3px solid #f3f3f3; border-top: 3px solid #3498db; border-radius: 50%; margin: 0 auto; animation: spin 1s linear infinite;"></div>
             </div>
             <style>
@@ -862,7 +862,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // 创建Apple Pay按钮
         const applePayBtn = document.createElement('button');
         applePayBtn.id = 'applePayBtn';
-        applePayBtn.innerHTML = '💰 Pay 购买完整课程 <span style="font-size: 24px; font-weight: bold;">$6.99</span>';
+        applePayBtn.innerHTML = '💰 Pay Unlock Full Version <span style="font-size: 24px; font-weight: bold;">$6.99</span>';
         applePayBtn.style.cssText = `
             background: black;
             color: white;
@@ -895,7 +895,7 @@ document.addEventListener('DOMContentLoaded', function() {
         applePayBtn.addEventListener('click', async function(e) {
             e.stopPropagation(); // 阻止事件冒泡
             
-            console.log("Apple Pay 按钮被点击");
+            console.log("Apple Pay button clicked");
             
             // 防止重复点击
             if (this.disabled) return;
@@ -903,7 +903,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // 禁用按钮，显示支付中状态
             this.disabled = true;
             this.style.opacity = '0.7';
-            this.innerHTML = '⏳ 正在连接Apple Pay...';
+            this.innerHTML = '⏳ Processing Pay...';
             
             try {
                 // 模拟支付流程
@@ -913,15 +913,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 await handlePurchaseSuccess();
                 
             } catch (error) {
-                console.error("支付失败:", error);
+                console.error("Payment failed:", error);
                 
                 // 恢复按钮状态
                 this.disabled = false;
                 this.style.opacity = '1';
-                this.innerHTML = '💰 Pay 购买完整课程 <span style="font-size: 24px; font-weight: bold;">$6.99</span>';
+                this.innerHTML = '💰 Pay Unlock Full Version <span style="font-size: 24px; font-weight: bold;">$6.99</span>';
                 
                 // 显示错误提示
-                alert("支付失败，请重试。错误：" + error.message);
+                alert("Payment failed, please try again。Error：" + error.message);
             }
         });
         
@@ -935,7 +935,7 @@ document.addEventListener('DOMContentLoaded', function() {
             margin: 5px 0 0 0;
             font-family: -apple-system, BlinkMacSystemFont, sans-serif;
         `;
-        securityNote.innerHTML = '🔒 安全支付 · 使用 Touch ID/Face ID 验证';
+        securityNote.innerHTML = '🔒 Secure Payment · Use Touch ID / Face ID';
         applePayContainer.appendChild(securityNote);
         
         // 确保开始按钮是隐藏的
@@ -1442,6 +1442,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </script>
 </body>
 </html>
+
 
 
 
