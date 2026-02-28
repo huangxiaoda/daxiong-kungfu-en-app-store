@@ -21,6 +21,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     width: 100%;
 }
 
@@ -730,10 +731,10 @@
     </div>
     
     <!-- 新增：Apple Pay 按钮容器 -->
-    <div id="applePayButton" style="margin: 15px 0; text-align: center;">
+    <div id="applePayButton" style="margin: 20px 0; text-align: center; display: flex; flex-direction: column; align-items: center;">
         <!-- Apple Pay 按钮会通过JS动态插入到这里 -->
     </div>
-            <button id="startButton">Start Training</button>
+            <button id="startButton" style="display: none; margin: 10px auto;">Start Training</button>
         </div>
     </div>
 
@@ -868,17 +869,18 @@ document.addEventListener('DOMContentLoaded', function() {
             color: white;
             border: none;
             border-radius: 12px;
-            padding: 18px 36px;
+            padding: 16px 32px;
             font-size: 20px;
             font-weight: 500;
             cursor: pointer;
-            margin: 15px 0;
+            margin: 15px auto;
             width: 100%;
-            max-width: 350px;
+            max-width: 280px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             transition: all 0.2s;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             letter-spacing: 0.5px;
+            display: block;
         `;
         
         // 按钮悬停效果
@@ -1442,6 +1444,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </script>
 </body>
 </html>
+
 
 
 
