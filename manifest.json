@@ -1,6 +1,6 @@
 {
   "name": "大熊学武功：功夫节奏挑战",
-  "short_name": "大熊学武功",
+  "short_name": "Daxiong Kung Fu",
   "description": "一款节奏感十足的功夫挑战游戏，看师傅演示，快速点击对应招式！",
   "start_url": "/",
   "display": "fullscreen",
@@ -22,3 +22,4 @@
   "categories": ["games", "education", "entertainment"],
   "lang": "zh-CN"
 }
+
