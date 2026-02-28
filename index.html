@@ -863,7 +863,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // 创建Apple Pay按钮
         const applePayBtn = document.createElement('button');
         applePayBtn.id = 'applePayBtn';
-        applePayBtn.innerHTML = '💰 Pay Unlock Kung Fu Gane <span style="font-size: 24px; font-weight: bold;">$6.99</span>';
+        applePayBtn.innerHTML = '💰 Pay Unlock Kung Fu Game <span style="font-size: 24px; font-weight: bold;">$6.99</span>';
         applePayBtn.style.cssText = `
             background: black;
             color: white;
@@ -873,7 +873,7 @@ document.addEventListener('DOMContentLoaded', function() {
             font-size: 20px;
             font-weight: 500;
             cursor: pointer;
-            margin: 15px auto;
+            margin: 20px auto;
             width: 100%;
             max-width: 280px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
@@ -920,7 +920,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // 恢复按钮状态
                 this.disabled = false;
                 this.style.opacity = '1';
-                this.innerHTML = '💰 Pay Unlock Full Version <span style="font-size: 24px; font-weight: bold;">$6.99</span>';
+                this.innerHTML = '💰 Pay Unlock Kung Fu Game <span style="font-size: 24px; font-weight: bold;">$6.99</span>';
                 
                 // 显示错误提示
                 alert("Payment failed, please try again。Error：" + error.message);
@@ -1444,6 +1444,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </script>
 </body>
 </html>
+
 
 
 
