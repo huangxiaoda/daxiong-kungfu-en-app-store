@@ -617,7 +617,39 @@
                 font-size: 1.5em;
             }
             
-            
+            /* 主标题样式 - 对应截图的 "Bear Kung Fu Challenge!" */
+.overlay h2 {
+    font-size: 36px;           /* 大号字体 */
+    font-weight: bold;         /* 粗体 */
+    color: #333333;            /* 深灰色 */
+    text-align: center;        /* 居中 */
+    margin-bottom: 10px;       /* 底部间距 */
+    letter-spacing: 1px;       /* 字间距 */
+    text-transform: uppercase;  /* 大写（如果需要） */
+}
+
+/* 副标题样式 - 对应截图的 "Watch the master..." */
+.overlay p {
+    font-size: 16px;           /* 小号字体 */
+    color: #666666;            /* 中灰色 */
+    text-align: center;        /* 居中 */
+    line-height: 1.5;          /* 行高 */
+    margin-bottom: 20px;       /* 底部间距 */
+    max-width: 80%;            /* 最大宽度 */
+    margin-left: auto;         /* 居中 */
+    margin-right: auto;        /* 居中 */
+}
+
+/* 如果要添加截图中那种分割线效果 */
+.overlay h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: #FF6B6B;       /* 红色线条 */
+    margin: 15px auto;         /* 居中 */
+    border-radius: 2px;
+}
             .overlay button {
                 padding: 10px 20px;
                 font-size: 1.2em;
@@ -661,39 +693,6 @@
             }
         }
     
-    /* 主标题样式 - 对应截图的 "Bear Kung Fu Challenge!" */
-.overlay h2 {
-    font-size: 36px;           /* 大号字体 */
-    font-weight: bold;         /* 粗体 */
-    color: #333333;            /* 深灰色 */
-    text-align: center;        /* 居中 */
-    margin-bottom: 10px;       /* 底部间距 */
-    letter-spacing: 1px;       /* 字间距 */
-    text-transform: uppercase;  /* 大写（如果需要） */
-}
-
-/* 副标题样式 - 对应截图的 "Watch the master..." */
-.overlay p {
-    font-size: 16px;           /* 小号字体 */
-    color: #666666;            /* 中灰色 */
-    text-align: center;        /* 居中 */
-    line-height: 1.5;          /* 行高 */
-    margin-bottom: 20px;       /* 底部间距 */
-    max-width: 80%;            /* 最大宽度 */
-    margin-left: auto;         /* 居中 */
-    margin-right: auto;        /* 居中 */
-}
-
-/* 如果要添加截图中那种分割线效果 */
-.overlay h2::after {
-    content: '';
-    display: block;
-    width: 60px;
-    height: 3px;
-    background: #FF6B6B;       /* 红色线条 */
-    margin: 15px auto;         /* 居中 */
-    border-radius: 2px;
-}
    
     </style>
 </head>
@@ -1472,6 +1471,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </script>
 </body>
 </html>
+
 
 
 
