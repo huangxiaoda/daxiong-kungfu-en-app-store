@@ -617,7 +617,28 @@
                 font-size: 1.5em;
             }
             
-           /* 白色风格 - 整体背景 */
+       /* 游戏logo样式 */
+.logo-container {
+    text-align: center;
+    margin-bottom: 15px;      /* logo和标题之间的间距 */
+    width: 100%;
+}
+
+.game-logo {
+    width: 120px;             /* 根据需要调整大小 */
+    height: auto;              /* 自动保持宽高比 */
+    max-width: 80%;            /* 在小屏幕上不超过容器宽度 */
+    display: inline-block;
+}
+
+/* 如果想要不同尺寸的logo适配不同屏幕 */
+@media (min-width: 768px) {
+    .game-logo {
+        width: 150px;          /* 大屏幕上更大一点 */
+    }
+}
+            
+            /* 白色风格 - 整体背景 */
 .overlay {
     background-color: #FFFFFF;  /* 白色背景 */
     color: #333333;             /* 深灰色文字 */
@@ -762,6 +783,10 @@
         </div>
 
         <div class="overlay" id="gameOverlay">
+           <!-- 游戏logo -->
+    <div class="logo-container">
+        < img src="images/kungfu-logo.png" alt="Bear Kung Fu Logo" class="game-logo">
+    </div>
             <h2>Bear Kung Fu Challenge!</h2>
             <p>Watch the master demonstrate, then quickly tap the correct move!</p>
               <!-- 新增：支付状态显示（初始隐藏） -->
@@ -1483,6 +1508,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </script>
 </body>
 </html>
+
 
 
 
