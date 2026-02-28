@@ -617,40 +617,58 @@
                 font-size: 1.5em;
             }
             
-            
-            /* 主标题样式 - 对应截图的 "Bear Kung Fu Challenge!" */
+            /* 主标题 - Bear Kung Fu Challenge */
 .overlay h2 {
-    font-size: 36px;           /* 大号字体 */
-    font-weight: bold;         /* 粗体 */
-    color: #333333;            /* 深灰色 */
-    text-align: center;        /* 居中 */
-    margin-bottom: 10px;       /* 底部间距 */
-    letter-spacing: 1px;       /* 字间距 */
-    text-transform: uppercase;  /* 大写（如果需要） */
+    font-size: 42px;              /* 更大的字体 */
+    font-weight: 900;             /* 最粗的字体 */
+    color: #222222;               /* 深黑色 */
+    text-align: center;
+    margin-bottom: 5px;
+    letter-spacing: 2px;          /* 增加字间距 */
+    text-transform: uppercase;     /* 全部大写 */
+    font-family: -apple-system, 'Helvetica Neue', 'Arial Black', sans-serif;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.1);  /* 轻微阴影增加立体感 */
+    line-height: 1.2;
 }
 
-/* 副标题样式 - 对应截图的 "Watch the master..." */
+/* 如果标题分两行，可以这样设置 */
+.overlay h2 span {
+    display: block;
+    font-size: 32px;              /* 第二行小一点 */
+    font-weight: 700;
+    color: #FF6B6B;               /* 功夫红 */
+    margin-top: 5px;
+}
+
+/* 副标题 - 描述文字 */
 .overlay p {
-    font-size: 16px;           /* 小号字体 */
-    color: #666666;            /* 中灰色 */
-    text-align: center;        /* 居中 */
-    line-height: 1.5;          /* 行高 */
-    margin-bottom: 20px;       /* 底部间距 */
-    max-width: 80%;            /* 最大宽度 */
-    margin-left: auto;         /* 居中 */
-    margin-right: auto;        /* 居中 */
+    font-size: 18px;
+    color: #444444;
+    text-align: center;
+    line-height: 1.6;
+    margin: 15px auto 25px auto;
+    max-width: 85%;
+    font-weight: 400;
+    font-style: italic;           /* 斜体让描述更优雅 */
+    opacity: 0.9;
 }
 
-/* 如果要添加截图中那种分割线效果 */
+/* 如果要添加功夫风格的红黑配色 */
+.overlay h2::first-line {
+    color: #D32F2F;               /* 功夫红 */
+}
+
+/* 或者添加底部红色装饰线 */
 .overlay h2::after {
     content: '';
     display: block;
-    width: 60px;
-    height: 3px;
-    background: #FF6B6B;       /* 红色线条 */
-    margin: 15px auto;         /* 居中 */
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #D32F2F, #000000);
+    margin: 15px auto 10px auto;
     border-radius: 2px;
 }
+          
             .overlay button {
                 padding: 10px 20px;
                 font-size: 1.2em;
@@ -1472,6 +1490,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </script>
 </body>
 </html>
+
 
 
 
