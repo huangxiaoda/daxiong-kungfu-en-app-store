@@ -1232,11 +1232,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         async function startGame() {
             console.log("startGame called.");
-        // **【新增】开始游戏前先隐藏/删除 purchaseStatus**
-    const purchaseStatus = document.getElementById('purchaseStatus');
-    if (purchaseStatus) {
-        purchaseStatus.remove(); // 直接删除
-    }
             if (isGameRunning) { 
                 console.log("Game is already running or starting, ignoring duplicate call.");
                 return;
@@ -1526,6 +1521,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </script>
 </body>
 </html>
+
 
 
 
