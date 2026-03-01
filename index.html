@@ -829,11 +829,26 @@ function handlePurchaseSuccess() {
     
     // 显示支付成功状态
     const purchaseStatus = document.getElementById('purchaseStatus');
-    purchaseStatus.style.display = 'block';
+    if (purchaseStatus) {
+        purchaseStatus.style.display = 'block';
+    }
     
-     // 延迟1秒后自动开始游戏
-     setTimeout(async function() {
+    // 延迟1秒后自动开始游戏
+    setTimeout(async function() {
         console.log("自动调用 startGame()");
+        
+        // **【新增】隐藏支付成功提示**
+        const purchaseStatus = document.getElementById('purchaseStatus');
+        if (purchaseStatus) {
+            purchaseStatus.style.display = 'none';
+        }
+        
+        // **【新增】确保游戏结束界面被隐藏**
+        const gameOverlay = document.getElementById('gameOverlay');
+        if (gameOverlay) {
+            gameOverlay.classList.add('hidden');
+        }
+        
         if (typeof startGame === 'function') {
             await startGame();
         } else {
@@ -1515,6 +1530,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </script>
 </body>
 </html>
+
 
 
 
