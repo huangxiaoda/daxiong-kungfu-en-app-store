@@ -1410,13 +1410,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         function endGame() {
-             // **【强制隐藏】放在最开头**
-    const purchaseStatus = document.getElementById('purchaseStatus');
-    if (purchaseStatus) {
-        purchaseStatus.style.display = 'none';
-        purchaseStatus.style.opacity = '0';
-        purchaseStatus.style.visibility = 'hidden';
-    }
             clearInterval(gameInterval);
             clearInterval(moveInterval);
             clearTimeout(moveTimeout); 
@@ -1535,6 +1528,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </script>
 </body>
 </html>
+
 
 
 
