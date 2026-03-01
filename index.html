@@ -726,7 +726,7 @@
             }
         }
        #purchaseStatus {
-    display: none !important;
+    display: none;
 }     
 
     </style>
@@ -833,8 +833,14 @@ function handlePurchaseSuccess() {
     const purchaseStatus = document.getElementById('purchaseStatus');
     if (purchaseStatus) {
         purchaseStatus.style.display = 'block';
-    }
     
+        // 新增：显示开始按钮（“Play Again”）
+    const startButton = document.getElementById('startButton');
+    if (startButton) {
+        startButton.style.display = 'inline-block'; // 与原有样式保持一致
+    }
+    }
+
     // 延迟1秒后自动开始游戏
     setTimeout(async function() {
         console.log("自动调用 startGame()");
@@ -858,7 +864,8 @@ function handlePurchaseSuccess() {
         }
     }, 1000);
 }
-// 模拟Apple Pay支付流程
+
+        // 模拟Apple Pay支付流程
 function simulateApplePayPayment() {
     return new Promise((resolve, reject) => {
         console.log("模拟Apple Pay支付流程...");
@@ -1521,6 +1528,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </script>
 </body>
 </html>
+
 
 
 
