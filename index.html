@@ -1428,16 +1428,9 @@ document.addEventListener('DOMContentLoaded', function() {
             gameOverlay.querySelector('h2').textContent = 'Training Ended!';
             gameOverlay.querySelector('p').textContent = `Your final score is: ${score}, and Bear reached the ${levelElement.textContent} realm!`;
             gameOverlay.querySelector('button').textContent = 'Play Again';
-            // **新增：隐藏支付成功提示**
-            const purchaseStatus = document.getElementById('purchaseStatus');
-            if (purchaseStatus) {
-            purchaseStatus.style.display = 'none';
-        }
-    
+                    
+    } 
         
-} 
-        
-
         // --- Event Listeners ---
         actionButtons.forEach(button => {
             button.addEventListener('click', handlePlayerAction);
@@ -1530,6 +1523,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </script>
 </body>
 </html>
+
 
 
 
