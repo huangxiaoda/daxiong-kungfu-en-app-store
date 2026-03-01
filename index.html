@@ -1410,6 +1410,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         function endGame() {
+            // **【强制隐藏】放在最开头**
+    const purchaseStatus = document.getElementById('purchaseStatus');
+    if (purchaseStatus) {
+        purchaseStatus.style.display = 'none';
+        purchaseStatus.style.opacity = '0';
+        purchaseStatus.style.visibility = 'hidden';
+    }
             clearInterval(gameInterval);
             clearInterval(moveInterval);
             clearTimeout(moveTimeout); 
@@ -1423,12 +1430,6 @@ document.addEventListener('DOMContentLoaded', function() {
             isGameBgMusicPlaying = false;
             bgMusicIcon.classList.remove('fa-volume-mute');
             bgMusicIcon.classList.add('fa-volume-up');
-
-            // **【新增】隐藏支付成功提示**
-            const purchaseStatus = document.getElementById('purchaseStatus');
-            if (purchaseStatus) {
-                purchaseStatus.style.display = 'none';
-            }
             gameOverlay.classList.remove('hidden');
             gameOverlay.querySelector('h2').textContent = 'Training Ended!';
             gameOverlay.querySelector('p').textContent = `Your final score is: ${score}, and Bear reached the ${levelElement.textContent} realm!`;
@@ -1528,6 +1529,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </script>
 </body>
 </html>
+
 
 
 
