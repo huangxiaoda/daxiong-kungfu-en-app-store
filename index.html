@@ -832,29 +832,15 @@ function handlePurchaseSuccess() {
     purchaseStatus.style.display = 'block';
     
      // 延迟1秒后自动开始游戏
-    setTimeout(async function() {
-        console.log("Auto-calling startGame()");
-        
-        // **新增：隐藏支付成功提示**
-        const purchaseStatus = document.getElementById('purchaseStatus');
-        if (purchaseStatus) {
-            purchaseStatus.style.display = 'none';
-        }
-        
-        // 确保游戏结束界面被隐藏
-        const gameOverlay = document.getElementById('gameOverlay');
-        if (gameOverlay) {
-            gameOverlay.classList.add('hidden');
-        }
-        
+     setTimeout(async function() {
+        console.log("自动调用 startGame()");
         if (typeof startGame === 'function') {
             await startGame();
         } else {
-            console.error("Error: startGame function not found!");
+            console.error("错误：找不到 startGame 函数！");
         }
     }, 1000);
 }
-
 // 模拟Apple Pay支付流程
 function simulateApplePayPayment() {
     return new Promise((resolve, reject) => {
@@ -1529,6 +1515,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </script>
 </body>
 </html>
+
 
 
 
