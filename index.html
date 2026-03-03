@@ -688,15 +688,11 @@
                 font-size: 1.2em;
             }
 
-             .overlay.ended .logo-container {
-                margin-top: -80px;
-            }
-            .overlay.ended h2 {
-                margin-top: -20px;
-            }
-            .overlay.ended p {
-                margin-top: -20px;
-            }
+            .overlay.ended {
+    padding-top: 30px;        
+    justify-content: flex-start;      /* 改为顶部对齐 */
+    padding-top: 20px;                /* 调整顶部留白，使内容不贴顶 */
+}
             .overlay.ended button {
                 margin-top: -5px;
             }
@@ -1553,6 +1549,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </script>
 </body>
 </html>
+
 
 
 
