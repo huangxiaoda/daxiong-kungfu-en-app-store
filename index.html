@@ -689,7 +689,7 @@
             }
 
 .overlay.ended {
-    transform: translateY(-100px);      /* 整体向上移动20px */
+    transform: translateY(-20px);      /* 整体向上移动20px */
 }
             
             .relax-music-player {
@@ -1449,7 +1449,7 @@ document.addEventListener('DOMContentLoaded', function() {
             gameOverlay.querySelector('h2').textContent = 'Training Ended!';
             gameOverlay.querySelector('p').textContent = `Your final score is: ${score}, and Bear reached the ${levelElement.textContent} realm!`;
             gameOverlay.querySelector('button').textContent = 'Play Again';
-                    
+            gameOverlay.classList.add('ended');       
     } 
         
         // --- Event Listeners ---
@@ -1544,6 +1544,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </script>
 </body>
 </html>
+
 
 
 
