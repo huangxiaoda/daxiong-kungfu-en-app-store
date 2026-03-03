@@ -1238,6 +1238,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         async function startGame() {
+            // 重置计时保护，避免上一局的残留影响
+            lastTimerUpdate = 0;
+            
             console.log("startGame called.");
             if (isGameRunning) { 
                 console.log("Game is already running or starting, ignoring duplicate call.");
@@ -1275,7 +1278,16 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log("startGame finished. Game is running.");
         }
 
+        let lastTimerUpdate = 0;
         function updateTimer() {
+            // 防止setInterval堆积调用
+            const now = Date.now();
+            if (lastTimerUpdate && now - lastTimerUpdate < 800) {
+                // 距离上次更新不足800ms，跳过此次执行
+                return;
+            }
+            lastTimerUpdate = now;
+          
             // Only update time if the game is running
             if (!isGameRunning) { 
                 if (gameInterval) { // If game stopped but timer is still running, clear it
@@ -1528,6 +1540,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </script>
 </body>
 </html>
+
 
 
 
