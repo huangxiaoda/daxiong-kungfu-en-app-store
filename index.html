@@ -977,6 +977,7 @@ document.addEventListener('DOMContentLoaded', function() {
             letter-spacing: 0.5px;
             display: block;
         `;
+
         
         // 按钮悬停效果
         applePayBtn.onmouseover = function() {
@@ -987,7 +988,10 @@ document.addEventListener('DOMContentLoaded', function() {
             this.style.transform = 'scale(1)';
             this.style.boxShadow = '0 4px 10px rgba(0,0,0,0.2)';
         };
-        
+      
+        // 定义产品ID
+        const IAP_PRODUCT_ID = 'com.daxiong.kungfu.unlock';
+       
         // 添加点击事件 - 只处理支付，不启动游戏
         applePayBtn.addEventListener('click', async function(e) {
             e.stopPropagation(); // 阻止事件冒泡
@@ -1003,10 +1007,25 @@ document.addEventListener('DOMContentLoaded', function() {
             this.innerHTML = '⏳ Processing Pay...';
             
             try {
-                // 模拟支付流程
-                await simulateApplePayPayment();
+                // 使用 Promise 包装 uni.requestPayment
+        const paymentResult = await new Promise((resolve, reject) => {
+            uni.requestPayment({
+                provider: 'appleiap',                      // 固定为苹果内购
+                paymentData: {
+                    productIdentifier: IAP_PRODUCT_ID      // 你的产品 ID
+                },
+                success: (res) => {
+                    resolve(res);
+                },
+                fail: (err) => {
+                    reject(err);
+                }
+            });
+        });
+
+        console.log('Payment success:', paymentResult);
+        // 支付成功后调用原有的处理函数（它会隐藏支付按钮、显示购买状态并启动游戏）
                 
-                // 支付成功后调用处理函数（这个函数会启动游戏）
                 await handlePurchaseSuccess();
                 
             } catch (error) {
@@ -1017,10 +1036,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.style.opacity = '1';
                 this.innerHTML = '💰 Pay Unlock Kung Fu Game <span style="font-size: 24px; font-weight: bold;">$6.99</span>';
                 
-                // 显示错误提示
-                alert("Payment failed, please try again。Error：" + error.message);
-            }
+               // 使用 uni.showToast 显示错误信息（比 alert 更友好）
+        uni.showToast({
+            title: '支付失败：' + (error.errMsg || '未知错误'),
+            icon: 'none',
+            duration: 2000
         });
+    }
+});
         
         applePayContainer.appendChild(applePayBtn);
         
@@ -1548,6 +1571,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </script>
 </body>
 </html>
+
 
 
 
