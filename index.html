@@ -932,6 +932,26 @@ function simulateApplePayPayment() {
     });
 }
 
+function requestIAPPayment(productId) {
+    return new Promise((resolve, reject) => {
+        uni.requestPayment({
+            provider: 'appleiap',          // 苹果内购
+            orderInfo: {                    // 对于苹果内购，这里需要传入产品ID
+                productId: productId,
+                quantity: 1
+            },
+            success: (res) => {
+                console.log('支付成功', res);
+                resolve({ success: true, res });
+            },
+            fail: (err) => {
+                console.error('支付失败', err);
+                reject({ success: false, message: err.errMsg || err.message });
+            }
+        });
+    });
+}
+        
 // ==================== 页面初始化 ====================
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -1012,7 +1032,7 @@ document.addEventListener('DOMContentLoaded', function() {
             this.innerHTML = '⏳ Processing Pay...';
             
             try {
-               await simulateApplePayPayment();
+               
                 //const paymentResult = await new Promise((resolve, reject) => {
         //plus.payment.request(
            // [IAP_PRODUCT_ID],
@@ -1024,7 +1044,14 @@ document.addEventListener('DOMContentLoaded', function() {
         //console.log('Payment success:', paymentResult);
         // 支付成功后调用原有的处理函数（它会隐藏支付按钮、显示购买状态并启动游戏）
                 
-                await handlePurchaseSuccess();
+               // 替换点：调用真实苹果内购
+        const result = await requestIAPPayment('com.daxiong.kungfu.unlock'); // 传入你的产品ID
+
+        if (result.success) {
+            await handlePurchaseSuccess();
+        } else {
+            throw new Error(result.message || 'Payment failed');
+        }  
                 
             } catch (error) {
                 console.error("Payment failed:", error);
@@ -1573,6 +1600,7 @@ alert("Payment failed, please try again。Error：" + error.message);
     </script>
 </body>
 </html>
+
 
 
 
