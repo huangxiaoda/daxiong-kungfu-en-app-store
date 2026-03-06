@@ -1016,10 +1016,15 @@ document.addEventListener('DOMContentLoaded', function() {
                
         // 根据环境选择支付方式
         if (typeof plus !== 'undefined') {
-            // 真机环境：调用真实苹果内购
-            const paymentResult = await new Promise((resolve, reject) => {
-                plus.payment.request([IAP_PRODUCT_ID], resolve, reject);
-            });
+             // 真机环境：调用真实苹果内购（修正参数）
+        const paymentResult = await new Promise((resolve, reject) => {
+            plus.payment.request(
+                ['appleiap'],
+                { productid: IAP_PRODUCT_ID, quantity: '1' },
+                resolve,
+                reject
+            );
+        });
             console.log('Real payment success:', paymentResult);
         // 支付成功后调用原有的处理函数（它会隐藏支付按钮、显示购买状态并启动游戏）
                 
@@ -1578,6 +1583,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </script>
 </body>
 </html>
+
 
 
 
