@@ -997,7 +997,12 @@ document.addEventListener('DOMContentLoaded', function() {
             e.stopPropagation(); // 阻止事件冒泡
             
             console.log("Apple Pay button clicked");
-            
+
+             // 检查 plus 是否可用
+    if (typeof plus === 'undefined') {
+        alert('支付环境未准备好，请确保在 App 内使用，或重启应用');
+        return;
+    }
             // 防止重复点击
             if (this.disabled) return;
             
@@ -1564,6 +1569,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </script>
 </body>
 </html>
+
 
 
 
