@@ -873,10 +873,10 @@ function handlePurchaseSuccess() {
     }, 1000);
 }
 
-        // 模拟Apple Pay支付流程
+        // Apple Pay支付流程
 function simulateApplePayPayment() {
     return new Promise((resolve, reject) => {
-        console.log("模拟Apple Pay支付流程...");
+        console.log("Apple Pay支付流程...");
         
         // 创建支付中界面
         const overlay = document.createElement('div');
@@ -1007,21 +1007,13 @@ document.addEventListener('DOMContentLoaded', function() {
             this.innerHTML = '⏳ Processing Pay...';
             
             try {
-                // 使用 Promise 包装 uni.requestPayment
-        const paymentResult = await new Promise((resolve, reject) => {
-            uni.requestPayment({
-                provider: 'appleiap',                      // 固定为苹果内购
-                paymentData: {
-                    productIdentifier: IAP_PRODUCT_ID      // 你的产品 ID
-                },
-                success: (res) => {
-                    resolve(res);
-                },
-                fail: (err) => {
-                    reject(err);
-                }
-            });
-        });
+                const paymentResult = await new Promise((resolve, reject) => {
+        plus.payment.request(
+            [IAP_PRODUCT_ID],
+            resolve,
+            reject
+        );
+    });
 
         console.log('Payment success:', paymentResult);
         // 支付成功后调用原有的处理函数（它会隐藏支付按钮、显示购买状态并启动游戏）
@@ -1036,13 +1028,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.style.opacity = '1';
                 this.innerHTML = '💰 Pay Unlock Kung Fu Game <span style="font-size: 24px; font-weight: bold;">$6.99</span>';
                 
-               // 使用 uni.showToast 显示错误信息（比 alert 更友好）
-        uni.showToast({
-            title: '支付失败：' + (error.errMsg || '未知错误'),
-            icon: 'none',
-            duration: 2000
-        });
+              // 使用 plus 原生提示（确保 plus 存在）
+    if (typeof plus !== 'undefined' && plus.nativeUI) {
+        plus.nativeUI.tost('支付失败：' + (error.message || '未知错误'), {duration: 'long'});
+    } else {
+        // 降级方案：使用 alert（仅用于开发环境）
+        alert('支付失败：' + (error.message || '未知错误'));
     }
+}  
 });
         
         applePayContainer.appendChild(applePayBtn);
@@ -1571,6 +1564,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </script>
 </body>
 </html>
+
 
 
 
