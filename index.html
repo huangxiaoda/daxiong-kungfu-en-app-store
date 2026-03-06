@@ -1018,13 +1018,44 @@ document.addEventListener('DOMContentLoaded', function() {
         if (typeof plus !== 'undefined') {
              // 真机环境：调用真实苹果内购（修正参数）
         const paymentResult = await new Promise((resolve, reject) => {
-            plus.payment.request(
-                ['appleiap'],
-                { productid: IAP_PRODUCT_ID, quantity: '1' },
-                resolve,
-                reject
-            );
-        });
+            // 1. 获取支付通道
+        plus.payment.getChannels(
+            (channels) => {
+                // 找到苹果内购通道
+                const iapChannel = channels.find(ch => ch.id === 'appleiap');
+                if (!iapChannel) {
+                    reject(new Error('未找到苹果内购通道，请检查manifest配置'));
+                    return;
+                }
+
+                // 2. 请求商品信息（必须！）
+                iapChannel.requestOrder(
+                    [IAP_PRODUCT_ID],
+                    (orderList) => {
+                        console.log('商品信息获取成功', orderList);
+                        
+                        // 3. 发起支付
+                        plus.payment.request(
+                            iapChannel,
+                            {
+                                productid: IAP_PRODUCT_ID,
+                                manualFinishTransaction: true // 建议手动完成交易
+                            },
+                            resolve,  // 支付成功
+                            reject   // 支付失败
+                        );
+                    },
+                    (err) => {
+                        reject(new Error('获取商品信息失败：' + (err.message || JSON.stringify(err))));
+                    }
+                );
+            },
+            (err) => {
+                reject(new Error('获取支付通道失败：' + (err.message || JSON.stringify(err))));
+            }
+        );
+    });
+           
             console.log('Real payment success:', paymentResult);
         // 支付成功后调用原有的处理函数（它会隐藏支付按钮、显示购买状态并启动游戏）
                 
@@ -1583,6 +1614,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </script>
 </body>
 </html>
+
 
 
 
