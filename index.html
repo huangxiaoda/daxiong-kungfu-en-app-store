@@ -932,25 +932,25 @@ function simulateApplePayPayment() {
     });
 }
 
-function requestIAPPayment(productId) {
-    return new Promise((resolve, reject) => {
-        uni.requestPayment({
-            provider: 'appleiap',          // 苹果内购
-            orderInfo: {                    // 对于苹果内购，这里需要传入产品ID
-                productId: productId,
-                quantity: 1
-            },
-            success: (res) => {
-                console.log('支付成功', res);
-                resolve({ success: true, res });
-            },
-            fail: (err) => {
-                console.error('支付失败', err);
-                reject({ success: false, message: err.errMsg || err.message });
-            }
-        });
-    });
-}
+//function requestIAPPayment(productId) {
+    //return new Promise((resolve, reject) => {
+        //uni.requestPayment({
+           // provider: 'appleiap',          // 苹果内购
+           // orderInfo: {                    // 对于苹果内购，这里需要传入产品ID
+               // productId: productId,
+               //quantity: 1
+           // },
+           // success: (res) => {
+                //console.log('支付成功', res);
+                //resolve({ success: true, res });
+           // },
+           // fail: (err) => {
+                //console.error('支付失败', err);
+               // reject({ success: false, message: err.errMsg || err.message });
+            //}
+        //});
+    //});
+//}
         
 // ==================== 页面初始化 ====================
 
@@ -1010,7 +1010,7 @@ document.addEventListener('DOMContentLoaded', function() {
         };
       
         // 定义产品ID
-        //const IAP_PRODUCT_ID = 'com.daxiong.kungfu.unlock';
+        const IAP_PRODUCT_ID = 'com.daxiong.kungfu.unlock';
        
         // 添加点击事件 - 只处理支付，不启动游戏
         applePayBtn.addEventListener('click', async function(e) {
@@ -1019,10 +1019,10 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log("Apple Pay button clicked");
 
              // 检查 plus 是否可用
-    //if (typeof plus === 'undefined') {
-       // alert('支付环境未准备好，请确保在 App 内使用，或重启应用');
-        //return;
-   // }
+    if (typeof plus === 'undefined') {
+        alert('支付环境未准备好，请确保在 App 内使用，或重启应用');
+        return;
+    }
             // 防止重复点击
             if (this.disabled) return;
             
@@ -1032,27 +1032,36 @@ document.addEventListener('DOMContentLoaded', function() {
             this.innerHTML = '⏳ Processing Pay...';
             
             try {
-               
-                //const paymentResult = await new Promise((resolve, reject) => {
-        //plus.payment.request(
-           // [IAP_PRODUCT_ID],
-           // resolve,
-           // reject
-        //);
-    //});
+               if (typeof plus !== 'undefined') {
+            // 真机环境：调用真实苹果内购
+                const paymentResult = await new Promise((resolve, reject) => {
+        plus.payment.request(
+            [IAP_PRODUCT_ID],
+            resolve,
+            reject
+        );
+    });
 
-        //console.log('Payment success:', paymentResult);
+        console.log('Payment success:', paymentResult);
         // 支付成功后调用原有的处理函数（它会隐藏支付按钮、显示购买状态并启动游戏）
                 
                // 替换点：调用真实苹果内购
-        const result = await requestIAPPayment('com.daxiong.kungfu.unlock'); // 传入你的产品ID
+        //const result = await requestIAPPayment('com.daxiong.kungfu.unlock'); // 传入你的产品ID
 
-        if (result.success) {
-            await handlePurchaseSuccess();
+       // if (result.success) {
+           // await handlePurchaseSuccess();
         } else {
-            throw new Error(result.message || 'Payment failed');
-        }  
-                
+            // 浏览器环境：调用模拟支付（保留原有 simulateApplePayPayment 函数）
+           
+            console.log('Simulating payment in browser');
+            await simulateApplePayPayment();
+        }
+
+                   // throw new Error(result.message || 'Payment failed');
+        //}  
+            // 支付成功后调用原有处理函数
+        await handlePurchaseSuccess();      
+          
             } catch (error) {
                 console.error("Payment failed:", error);
                 
@@ -1062,15 +1071,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.innerHTML = '💰 Pay Unlock Kung Fu Game <span style="font-size: 24px; font-weight: bold;">$6.99</span>';
                 
               // 使用 plus 原生提示（确保 plus 存在）
-    //if (typeof plus !== 'undefined' && plus.nativeUI) {
-        //plus.nativeUI.tost('支付失败：' + (error.message || '未知错误'), {duration: 'long'});
-   // } else {
+    if (typeof plus !== 'undefined' && plus.nativeUI) {
+        plus.nativeUI.tost('支付失败：' + (error.message || '未知错误'), {duration: 'long'});
+    } else {
         // 降级方案：使用 alert（仅用于开发环境）
-        //alert('支付失败：' + (error.message || '未知错误'));
+        alert('支付失败：' + (error.message || '未知错误'));
     
     // 显示错误提示                
 alert("Payment failed, please try again。Error：" + error.message);                           
-//}  
+}  
 }
 });
         
@@ -1600,6 +1609,7 @@ alert("Payment failed, please try again。Error：" + error.message);
     </script>
 </body>
 </html>
+
 
 
 
