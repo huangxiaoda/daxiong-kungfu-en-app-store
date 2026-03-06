@@ -1032,17 +1032,14 @@ document.addEventListener('DOMContentLoaded', function() {
             this.innerHTML = '⏳ Processing Pay...';
             
             try {
-               if (typeof plus !== 'undefined') {
+               
+        // 根据环境选择支付方式
+        if (typeof plus !== 'undefined') {
             // 真机环境：调用真实苹果内购
-                const paymentResult = await new Promise((resolve, reject) => {
-        plus.payment.request(
-            [IAP_PRODUCT_ID],
-            resolve,
-            reject
-        );
-    });
-
-        console.log('Payment success:', paymentResult);
+            const paymentResult = await new Promise((resolve, reject) => {
+                plus.payment.request([IAP_PRODUCT_ID], resolve, reject);
+            });
+            console.log('Real payment success:', paymentResult);
         // 支付成功后调用原有的处理函数（它会隐藏支付按钮、显示购买状态并启动游戏）
                 
                // 替换点：调用真实苹果内购
@@ -1070,18 +1067,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.style.opacity = '1';
                 this.innerHTML = '💰 Pay Unlock Kung Fu Game <span style="font-size: 24px; font-weight: bold;">$6.99</span>';
                 
-              // 使用 plus 原生提示（确保 plus 存在）
-    if (typeof plus !== 'undefined' && plus.nativeUI) {
-        plus.nativeUI.tost('支付失败：' + (error.message || '未知错误'), {duration: 'long'});
-    } else {
-        // 降级方案：使用 alert（仅用于开发环境）
-        alert('支付失败：' + (error.message || '未知错误'));
-    
-    // 显示错误提示                
-alert("Payment failed, please try again。Error：" + error.message);                           
-}  
-}
-});
+             // 错误提示：根据环境选择合适的方式
+        const errorMsg = '支付失败：' + (error.message || '未知错误');
+        if (typeof plus !== 'undefined' && plus.nativeUI) {
+            plus.nativeUI.toast(errorMsg, { duration: 'long' });
+        } else {
+            alert(errorMsg);
+        }
+    }
+}); 
         
         applePayContainer.appendChild(applePayBtn);
         
@@ -1609,6 +1603,7 @@ alert("Payment failed, please try again。Error：" + error.message);
     </script>
 </body>
 </html>
+
 
 
 
