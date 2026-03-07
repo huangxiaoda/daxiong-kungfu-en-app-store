@@ -1137,6 +1137,8 @@ function restorePurchases(channel) {
     });
 }
       
+// ✅ 将按钮添加到支付容器（必须保留）
+document.getElementById('applePayButton').appendChild(restoreBtn);
         
         // 添加安全支付提示
         const securityNote = document.createElement('p');
@@ -1662,6 +1664,7 @@ function restorePurchases(channel) {
     </script>
 </body>
 </html>
+
 
 
 
