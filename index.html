@@ -1118,28 +1118,24 @@ restoreBtn.addEventListener('click', async function() {
                     return;
                 }
                 // 恢复购买的核心API: restoreComplateTransactions
-                iapChannel.restoreCompletedTransactions((result) => {
+              iapChannel.restoreCompletedTransactions((result) => {
                     console.log('恢复购买成功', result);
                     resolve(result);
                 }, (err) => {
-                    console.log('恢复购买失败', err);
-                    reject(err);
+                    console.error('恢复购买失败详细错误:', err);
+                    let errMsg = err.message || JSON.stringify(err);
+                    reject(new Error('恢复失败：' + errMsg));
                 });
             }, (err) => {
-                reject(new Error('获取支付通道失败'));
+                reject(new Error('获取支付通道失败：' + err.message));
             });
         });
         
-        // 恢复成功后，直接调用你已有的游戏启动函数
-        console.log('恢复成功，启动游戏');
-        // 隐藏支付界面，显示购买成功状态（和支付成功后的逻辑保持一致）
-        await handlePurchaseSuccess(); 
-        
+        await handlePurchaseSuccess(); // 恢复成功直接进入游戏
     } catch (error) {
         console.error("恢复购买失败:", error);
-        alert('恢复失败，请确保你已购买过该游戏。');
+        alert(error.message);
     } finally {
-        // 恢复按钮状态
         this.disabled = false;
         this.textContent = 'Restore Purchases';
     }
@@ -1672,6 +1668,7 @@ document.getElementById('applePayButton').appendChild(restoreBtn);
     </script>
 </body>
 </html>
+
 
 
 
