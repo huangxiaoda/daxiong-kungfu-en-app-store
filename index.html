@@ -1089,36 +1089,28 @@ document.addEventListener('DOMContentLoaded', function() {
 }); 
         
         applePayContainer.appendChild(applePayBtn);
-
-        // ==================== 恢复购买功能 ====================
-
-// 创建一个“恢复购买”按钮（比如放在支付按钮下方）
+// 创建恢复购买按钮
 const restoreBtn = document.createElement('button');
 restoreBtn.id = 'restorePurchasesBtn';
-restoreBtn.textContent = 'Restore Purchases'; // 或“恢复购买”
-// ... 添加样式，让它看起来像一个普通的按钮 ...
+restoreBtn.textContent = 'Restore Purchases';
+// ... 样式代码保持不变 ...
 
-// 为恢复按钮添加点击事件
 restoreBtn.addEventListener('click', async function() {
     console.log("恢复购买按钮被点击");
-    
-    // 防止重复点击
     if (this.disabled) return;
     this.disabled = true;
-    this.textContent = 'Restoring...'; // 恢复中...
+    this.textContent = 'Restoring...';
     
     try {
-        // 调用苹果的恢复购买接口
         const restoreResult = await new Promise((resolve, reject) => {
-            // 同样需要先获取支付通道
             plus.payment.getChannels((channels) => {
                 const iapChannel = channels.find(ch => ch.id === 'appleiap');
                 if (!iapChannel) {
                     reject(new Error('未找到苹果内购通道'));
                     return;
                 }
-                // 恢复购买的核心API: restoreComplateTransactions
-              iapChannel.restoreCompletedTransactions((result) => {
+                // ✅ 正确的方法名
+                iapChannel.restoreCompletedTransactions((result) => {
                     console.log('恢复购买成功', result);
                     resolve(result);
                 }, (err) => {
@@ -1140,9 +1132,9 @@ restoreBtn.addEventListener('click', async function() {
         this.textContent = 'Restore Purchases';
     }
 });
-    
-        // 将恢复按钮添加到页面上，比如和支付按钮放在一起
-document.getElementById('applePayButton').appendChild(restoreBtn);  
+
+// ✅ 将按钮添加到支付容器（必须保留）
+document.getElementById('applePayButton').appendChild(restoreBtn);
        
         // 添加安全支付提示
         const securityNote = document.createElement('p');
@@ -1668,6 +1660,7 @@ document.getElementById('applePayButton').appendChild(restoreBtn);
     </script>
 </body>
 </html>
+
 
 
 
