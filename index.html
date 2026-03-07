@@ -1089,52 +1089,7 @@ document.addEventListener('DOMContentLoaded', function() {
 }); 
         
         applePayContainer.appendChild(applePayBtn);
-// 创建恢复购买按钮
-const restoreBtn = document.createElement('button');
-restoreBtn.id = 'restorePurchasesBtn';
-restoreBtn.textContent = 'Restore Purchases';
-// ... 样式代码保持不变 ...
 
-restoreBtn.addEventListener('click', async function() {
-    console.log("恢复购买按钮被点击");
-    if (this.disabled) return;
-    this.disabled = true;
-    this.textContent = 'Restoring...';
-    
-    try {
-        const restoreResult = await new Promise((resolve, reject) => {
-            plus.payment.getChannels((channels) => {
-                const iapChannel = channels.find(ch => ch.id === 'appleiap');
-                if (!iapChannel) {
-                    reject(new Error('未找到苹果内购通道'));
-                    return;
-                }
-                // ✅ 正确的方法名
-                iapChannel.restoreCompletedTransactions((result) => {
-                    console.log('恢复购买成功', result);
-                    resolve(result);
-                }, (err) => {
-                    console.error('恢复购买失败详细错误:', err);
-                    let errMsg = err.message || JSON.stringify(err);
-                    reject(new Error('恢复失败：' + errMsg));
-                });
-            }, (err) => {
-                reject(new Error('获取支付通道失败：' + err.message));
-            });
-        });
-        
-        await handlePurchaseSuccess(); // 恢复成功直接进入游戏
-    } catch (error) {
-        console.error("恢复购买失败:", error);
-        alert(error.message);
-    } finally {
-        this.disabled = false;
-        this.textContent = 'Restore Purchases';
-    }
-});
-
-// ✅ 将按钮添加到支付容器（必须保留）
-document.getElementById('applePayButton').appendChild(restoreBtn);
        
         // 添加安全支付提示
         const securityNote = document.createElement('p');
@@ -1660,6 +1615,7 @@ document.getElementById('applePayButton').appendChild(restoreBtn);
     </script>
 </body>
 </html>
+
 
 
 
