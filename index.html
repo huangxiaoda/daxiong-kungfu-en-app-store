@@ -1090,7 +1090,50 @@ document.addEventListener('DOMContentLoaded', function() {
         
         applePayContainer.appendChild(applePayBtn);
 
-       
+
+        restoreBtn.addEventListener('click', async function() {
+    if (this.disabled) return;
+    this.disabled = true;
+    this.textContent = 'Restoring...';
+
+    try {
+        const channels = await getPaymentChannels(); // 封装成 Promise
+        const iapChannel = channels.find(ch => ch.id === 'appleiap');
+        if (!iapChannel) throw new Error('未找到苹果内购通道');
+
+        const restoredTransactions = await restorePurchases(iapChannel); // 封装恢复方法
+        if (restoredTransactions && restoredTransactions.length > 0) {
+            console.log('恢复的交易:', restoredTransactions);
+            // 可选：验证收据
+            // await validateReceiptWithServer(restoredTransactions[0].transactionReceipt);
+            await handlePurchaseSuccess(); // 解锁功能
+        } else {
+            alert('没有可恢复的购买记录。');
+        }
+    } catch (error) {
+        console.error('恢复失败:', error);
+        alert('恢复失败：' + (error.message || '未知错误'));
+    } finally {
+        this.disabled = false;
+        this.textContent = 'Restore Purchases';
+    }
+});
+
+// 辅助函数：获取支付通道
+function getPaymentChannels() {
+    return new Promise((resolve, reject) => {
+        plus.payment.getChannels(resolve, reject);
+    });
+}
+
+// 辅助函数：恢复购买
+function restorePurchases(channel) {
+    return new Promise((resolve, reject) => {
+        channel.restoreComplateTransactions(resolve, reject);
+    });
+}
+      
+        
         // 添加安全支付提示
         const securityNote = document.createElement('p');
         securityNote.style.cssText = `
@@ -1615,6 +1658,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </script>
 </body>
 </html>
+
 
 
 
