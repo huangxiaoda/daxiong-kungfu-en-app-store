@@ -1089,13 +1089,71 @@ document.addEventListener('DOMContentLoaded', function() {
 }); 
         
         applePayContainer.appendChild(applePayBtn);
+
+        // ==================== 恢复购买功能 ====================
+
+// 创建一个“恢复购买”按钮（比如放在支付按钮下方）
+const restoreBtn = document.createElement('button');
+restoreBtn.id = 'restorePurchasesBtn';
+restoreBtn.textContent = 'Restore Purchases'; // 或“恢复购买”
+// ... 添加样式，让它看起来像一个普通的按钮 ...
+
+// 为恢复按钮添加点击事件
+restoreBtn.addEventListener('click', async function() {
+    console.log("恢复购买按钮被点击");
+    
+    // 防止重复点击
+    if (this.disabled) return;
+    this.disabled = true;
+    this.textContent = 'Restoring...'; // 恢复中...
+    
+    try {
+        // 调用苹果的恢复购买接口
+        const restoreResult = await new Promise((resolve, reject) => {
+            // 同样需要先获取支付通道
+            plus.payment.getChannels((channels) => {
+                const iapChannel = channels.find(ch => ch.id === 'appleiap');
+                if (!iapChannel) {
+                    reject(new Error('未找到苹果内购通道'));
+                    return;
+                }
+                // 恢复购买的核心API: restoreComplateTransactions
+                iapChannel.restoreComplateTransactions((result) => {
+                    console.log('恢复购买成功', result);
+                    resolve(result);
+                }, (err) => {
+                    console.log('恢复购买失败', err);
+                    reject(err);
+                });
+            }, (err) => {
+                reject(new Error('获取支付通道失败'));
+            });
+        });
         
+        // 恢复成功后，直接调用你已有的游戏启动函数
+        console.log('恢复成功，启动游戏');
+        // 隐藏支付界面，显示购买成功状态（和支付成功后的逻辑保持一致）
+        await handlePurchaseSuccess(); 
+        
+    } catch (error) {
+        console.error("恢复购买失败:", error);
+        alert('恢复失败，请确保你已购买过该游戏。');
+    } finally {
+        // 恢复按钮状态
+        this.disabled = false;
+        this.textContent = 'Restore Purchases';
+    }
+});
+    
+        // 将恢复按钮添加到页面上，比如和支付按钮放在一起
+document.getElementById('applePayButton').appendChild(restoreBtn);  
+       
         // 添加安全支付提示
         const securityNote = document.createElement('p');
         securityNote.style.cssText = `
             color: #666;
             font-size: 13px;
-            margin: 30px auto 0 auto;
+            margin: 10px auto 0 auto;
             font-family: -apple-system, BlinkMacSystemFont, sans-serif;
         `;
         securityNote.innerHTML = '🔒 Secure Payment · Use Touch ID / Face ID';
@@ -1614,6 +1672,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </script>
 </body>
 </html>
+
 
 
 
