@@ -1090,7 +1090,11 @@ document.addEventListener('DOMContentLoaded', function() {
         
         applePayContainer.appendChild(applePayBtn);
 
-
+// 创建一个“恢复购买”按钮（比如放在支付按钮下方）
+const restoreBtn = document.createElement('button');
+restoreBtn.id = 'restorePurchasesBtn';
+restoreBtn.textContent = 'Restore Purchases'; 
+      
         restoreBtn.addEventListener('click', async function() {
     if (this.disabled) return;
     this.disabled = true;
@@ -1658,6 +1662,7 @@ function restorePurchases(channel) {
     </script>
 </body>
 </html>
+
 
 
 
