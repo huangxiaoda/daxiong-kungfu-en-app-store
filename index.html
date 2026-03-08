@@ -1092,6 +1092,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 // 创建一个“恢复购买”按钮（比如放在支付按钮下方）
+const restoreBtn = document.createElement('button');
+restoreBtn.id = 'restorePurchasesBtn';
+restoreBtn.textContent = 'Restore Purchases'; 
+ 
+        
+// 为恢复按钮添加点击事件      
 restoreBtn.addEventListener('click', async function() {
     console.log("恢复购买按钮被点击");
     if (this.disabled) return;
@@ -1674,6 +1680,7 @@ document.getElementById('applePayButton').appendChild(restoreBtn);
     </script>
 </body>
 </html>
+
 
 
 
