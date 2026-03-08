@@ -1090,78 +1090,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         applePayContainer.appendChild(applePayBtn);
 
-
-// 创建一个“恢复购买”按钮（比如放在支付按钮下方）
-const restoreBtn = document.createElement('button');
-restoreBtn.id = 'restorePurchasesBtn';
-restoreBtn.textContent = 'Restore Purchases'; 
- 
         
-// 为恢复按钮添加点击事件      
-restoreBtn.addEventListener('click', async function() {
-    console.log('=== 恢复按钮点击事件开始 ===');
-    if (this.disabled) {
-        console.log('按钮已禁用，忽略');
-        return;
-    }
-    this.disabled = true;
-    this.textContent = 'Restoring...';
-    
-    try {
-        console.log('开始获取支付通道...');
-        // 超时 Promise
-        const timeoutPromise = new Promise((_, reject) => 
-            setTimeout(() => reject(new Error('恢复超时，请检查网络或账号是否已购买')), 10000)
-        );
-
-        const restorePromise = new Promise((resolve, reject) => {
-            plus.payment.getChannels(
-                (channels) => {
-                    console.log('获取通道成功，通道列表:', channels.map(c => c.id));
-                    const iapChannel = channels.find(ch => ch.id === 'appleiap');
-                    if (!iapChannel) {
-                        reject(new Error('未找到苹果内购通道'));
-                        return;
-                    }
-                    console.log('找到appleiap通道，serviceReady:', iapChannel.serviceReady);
-                    
-                    console.log('开始调用 restoreCompletedTransactions...');
-                    iapChannel.restoreCompletedTransactions(
-                        (result) => {
-                            console.log('恢复成功回调，result:', result);
-                            resolve(result);
-                        },
-                        (err) => {
-                            console.error('恢复失败回调，err:', err);
-                            reject(new Error('恢复失败：' + (err.message || JSON.stringify(err))));
-                        }
-                    );
-                },
-                (err) => {
-                    reject(new Error('获取支付通道失败：' + err.message));
-                }
-            );
-        });
-
-        // 竞速：恢复操作 vs 超时
-        const restoreResult = await Promise.race([restorePromise, timeoutPromise]);
-        console.log('恢复成功，即将进入游戏');
-        await handlePurchaseSuccess();
-        
-    } catch (error) {
-        console.error('恢复过程捕获到异常:', error);
-        alert('恢复失败：' + error.message); // 弹窗提示用户
-    } finally {
-        this.disabled = false;
-        this.textContent = 'Restore Purchases';
-        console.log('=== 恢复按钮点击事件结束 ===');
-    }
-});
-
-        // ✅ 将按钮添加到支付容器（必须保留）
-document.getElementById('applePayButton').appendChild(restoreBtn);
-        
-   
         // 添加安全支付提示
         const securityNote = document.createElement('p');
         securityNote.style.cssText = `
@@ -1686,6 +1615,7 @@ document.getElementById('applePayButton').appendChild(restoreBtn);
     </script>
 </body>
 </html>
+
 
 
 
