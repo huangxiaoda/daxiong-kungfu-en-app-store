@@ -1090,57 +1090,56 @@ document.addEventListener('DOMContentLoaded', function() {
         
         applePayContainer.appendChild(applePayBtn);
 
-// 创建一个“恢复购买”按钮（比如放在支付按钮下方）
+
 // 创建一个“恢复购买”按钮（比如放在支付按钮下方）
 const restoreBtn = document.createElement('button');
 restoreBtn.id = 'restorePurchasesBtn';
 restoreBtn.textContent = 'Restore Purchases'; 
         
 restoreBtn.addEventListener('click', async function() {
+    console.log("恢复购买按钮被点击");
     if (this.disabled) return;
     this.disabled = true;
     this.textContent = 'Restoring...';
-
+    
+    console.log("开始获取支付通道...");
     try {
-        // 获取支付通道
-        const channels = await new Promise((resolve, reject) => {
-            plus.payment.getChannels(resolve, reject);
-        });
-        const iapChannel = channels.find(ch => ch.id === 'appleiap');
-        if (!iapChannel) throw new Error('未找到苹果内购通道');
-
-        // 调试：打印通道对象的所有方法
-        console.log('iapChannel 方法:', Object.keys(iapChannel));
-
-        // 调用恢复购买（注意方法名）
         const restoreResult = await new Promise((resolve, reject) => {
-            // 尝试正确的 API 名称
-            if (typeof iapChannel.restoreCompletedTransactions === 'function') {
-                iapChannel.restoreCompletedTransactions(resolve, reject);
-            } 
-            // 如果通道对象没有，尝试全局 plus.payment
-            else if (typeof plus.payment.restoreCompletedTransactions === 'function') {
-                plus.payment.restoreCompletedTransactions(resolve, reject);
-            } 
-            else {
-                reject(new Error('当前环境不支持恢复购买功能'));
-            }
+            plus.payment.getChannels((channels) => {
+                console.log("获取支付通道成功，通道列表：", channels.map(c => c.id));
+                const iapChannel = channels.find(ch => ch.id === 'appleiap');
+                if (!iapChannel) {
+                    console.error("未找到appleiap通道");
+                    reject(new Error('未找到苹果内购通道'));
+                    return;
+                }
+                console.log("找到appleiap通道，开始恢复购买，iapChannel对象：", iapChannel);
+                // 调用恢复购买
+                iapChannel.restoreCompletedTransactions((result) => {
+                    console.log("恢复购买成功回调，result:", result);
+                    resolve(result);
+                }, (err) => {
+                    console.error("恢复购买失败回调，err:", err);
+                    let errMsg = err.message || JSON.stringify(err);
+                    reject(new Error('恢复失败：' + errMsg));
+                });
+                console.log("restoreCompletedTransactions 调用已发出");
+            }, (err) => {
+                console.error("获取支付通道失败:", err);
+                reject(new Error('获取支付通道失败：' + err.message));
+            });
         });
-
-        console.log('恢复结果:', restoreResult);
-
-        // 处理恢复结果
-        if (restoreResult && restoreResult.length > 0) {
-            await handlePurchaseSuccess(); // 解锁游戏
-        } else {
-            alert('没有找到可恢复的购买记录。');
-        }
+        
+        console.log("恢复成功，准备进入游戏");
+        await handlePurchaseSuccess();
+        
     } catch (error) {
-        console.error('恢复失败:', error);
-        alert('恢复失败：' + (error.message || '未知错误'));
+        console.error("恢复购买过程捕获到异常:", error);
+        alert(error.message); // 弹窗提示用户
     } finally {
         this.disabled = false;
         this.textContent = 'Restore Purchases';
+        console.log("恢复按钮状态已重置");
     }
 });
       
@@ -1671,6 +1670,7 @@ document.getElementById('applePayButton').appendChild(restoreBtn);
     </script>
 </body>
 </html>
+
 
 
 
