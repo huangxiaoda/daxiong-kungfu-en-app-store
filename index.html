@@ -829,7 +829,9 @@ function isApplePayAvailable() {
 // 支付成功后的处理函数
 function handlePurchaseSuccess() {
     console.log("Payment successful, starting game");
-    
+
+    window.hasPurchased = true; // 标记已付费
+   
     // 隐藏支付按钮容器（整个移除，避免重复点击）
     const applePayContainer = document.getElementById('applePayButton');
     if (applePayContainer) {
@@ -1520,6 +1522,11 @@ document.addEventListener('DOMContentLoaded', function() {
             gameOverlay.querySelector('h2').textContent = 'Training Ended!';
             gameOverlay.querySelector('p').textContent = `Your final score is: ${score}, and Bear reached the ${levelElement.textContent} realm!`;
             gameOverlay.querySelector('button').textContent = 'Play Again';
+            // 确保游戏结束时，已付费用户看不到支付按钮
+            if (window.hasPurchased) {
+                document.getElementById('applePayButton').style.display = 'none';
+                document.getElementById('startButton').style.display = 'inline-block';
+            }
             gameOverlay.classList.add('ended');       
     } 
         
@@ -1615,6 +1622,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </script>
 </body>
 </html>
+
 
 
 
