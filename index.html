@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Daxiong Kung Fu：Kung Fu Rhythm Challenge</title>
+    <title>大熊学武功：功夫节奏挑战</title>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="icon-192.png">
     <link rel="apple-touch-icon" href="icon-192.png">
@@ -15,54 +15,8 @@
     <!-- Font Awesome for speaker icon (保留原有，未新增) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-
-     /* 添加一些动画效果 */
-#applePayButton {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-}
-
-#startButton {
-    background: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 15px 30px;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-#startButton:hover {
-    background: #45a049;
-}
-
-#purchaseStatus {
-    font-size: 16px;
-    animation: fadeIn 0.5s;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-/* Apple Pay 按钮的脉冲动画效果（可选） */
-@keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(0,0,0,0.3); }
-    70% { box-shadow: 0 0 0 10px rgba(0,0,0,0); }
-    100% { box-shadow: 0 0 0 0 rgba(0,0,0,0); }
-}
-
-#applePayBtn {
-    animation: pulse 2s infinite;
-}
-      
-        /* 页面整体样式 */
+       
+         /* 页面整体样式 */
         body {
             font-family: 'Zhi Mang Xing', cursive, sans-serif;
             background-color: #f7e0b5;
@@ -617,83 +571,17 @@
                 font-size: 1.5em;
             }
             
-       /* 游戏logo样式 */
-.logo-container {
-    text-align: center;
-    margin-bottom: 15px;      /* logo和标题之间的间距 */
-    width: 100%;
-}
-
-.game-logo {
-    width: 120px;             /* 根据需要调整大小 */
-    height: auto;              /* 自动保持宽高比 */
-    max-width: 80%;            /* 在小屏幕上不超过容器宽度 */
-    display: inline-block;
-}
-
-/* 如果想要不同尺寸的logo适配不同屏幕 */
-@media (min-width: 768px) {
-    .game-logo {
-        width: 300px;          /* 大屏幕上更大一点 */
-    }
-}
+            .overlay h2 {
+                font-size: 1.2em;
+            }
             
-            /* 白色风格 - 整体背景 */
-.overlay {
-    background-color: #FFFFFF;  /* 白色背景 */
-    color: #333333;             /* 深灰色文字 */
-    padding: 20px;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);  /* 轻微阴影 */
-}
-
-/* 主标题 - BEAR KUNG FU CHALLENGE! */
-.overlay h2 {
-    font-size: 40px;
-    font-weight: 800;
-    color: #222222;              /* 深色文字 */
-    text-align: center;
-    margin-bottom: 5px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    font-family: -apple-system, 'Helvetica Neue', 'Arial Black', sans-serif;
-    line-height: 1.2;
-}
-
-/* 主标题第二行单独设置（如果分两行） */
-.overlay h2 span {
-    display: block;
-    font-size: 32px;
-    font-weight: 700;
-    color: #555555;              /* 中灰色，不要红色 */
-    margin-top: 5px;
-    opacity: 0.9;                 /* 稍微淡一点 */
-}
-
-/* 副标题 - Watch the master demonstrate... */
-.overlay p {
-    font-size: 18px;
-    color: #666666;              /* 中灰色 */
-    text-align: center;
-    line-height: 1.6;
-    margin: 15px auto 25px auto;
-    max-width: 85%;
-    font-weight: 400;
-    font-style: italic;
-    display: block;              /* 确保显示 */
-}
-          
+            .overlay p {
+                font-size: 0.7em;
+            }
+            
             .overlay button {
                 padding: 10px 20px;
                 font-size: 1.2em;
-            }
-
-            .overlay.ended {      
-    justify-content: flex-start;      /* 改为顶部对齐 */
-    padding-top: 80px;                /* 调整顶部留白，使内容不贴顶 */
-}
-            .overlay.ended button {
-                margin-top: -5px;
             }
             
             .relax-music-player {
@@ -733,10 +621,6 @@
 
             }
         }
-       #purchaseStatus {
-    display: none;
-}     
-
     </style>
 </head>
 <body>
@@ -793,339 +677,14 @@
         </div>
 
         <div class="overlay" id="gameOverlay">
-           <!-- 游戏logo -->
-    <div class="logo-container">
-        <img src="icon-512.png" alt="Bear Kung Fu Logo" class="game-logo">
-    </div>
             <h2>Bear Kung Fu Challenge!</h2>
             <p>Watch the master demonstrate, then quickly tap the correct move!</p>
-              <!-- 新增：支付状态显示（初始隐藏） -->
-    <div id="purchaseStatus" style="display: none; color: #4CAF50; margin: 10px 0; font-weight: bold;">
-        ✅ Purchase successful! Loading Kung Fu course...
-    </div>
-    
-    <!-- 新增：Apple Pay 按钮容器 -->
-    <div id="applePayButton" style="margin: 50px 0 20px 0; text-align: center; display: flex; flex-direction: column; align-items: center;">
-        <!-- Apple Pay 按钮会通过JS动态插入到这里 -->
-    </div>
-            <button id="startButton" style="display: none; margin: 10px auto;">Start Training</button>
+            <button id="startButton">Start Training</button>
         </div>
     </div>
 
     <script>
        
-      // ==================== 支付相关代码 ====================
-
-// 检测是否在iOS设备上
-function isIOSDevice() {
-    return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-}
-
-// 检测是否支持Apple Pay
-function isApplePayAvailable() {
-    return window.ApplePaySession && ApplePaySession.canMakePayments();
-}
-
-// 支付成功后的处理函数
-function handlePurchaseSuccess() {
-    console.log("Payment successful, starting game");
-
-    window.hasPurchased = true; // 标记已付费
-   
-    // 隐藏支付按钮容器（整个移除，避免重复点击）
-    const applePayContainer = document.getElementById('applePayButton');
-    if (applePayContainer) {
-        applePayContainer.innerHTML = ''; // 清空内容
-        applePayContainer.style.display = 'none';
-    }
-    
-    // 显示支付成功状态
-    const purchaseStatus = document.getElementById('purchaseStatus');
-    if (purchaseStatus) {
-        purchaseStatus.style.display = 'block';
-    
-        // 新增：显示开始按钮（“Play Again”）
-    const startButton = document.getElementById('startButton');
-    if (startButton) {
-        startButton.style.display = 'inline-block'; // 与原有样式保持一致
-    }
-    }
-
-    // 延迟1秒后自动开始游戏
-    setTimeout(async function() {
-        console.log("自动调用 startGame()");
-        
-        // **【新增】隐藏支付成功提示**
-        const purchaseStatus = document.getElementById('purchaseStatus');
-        if (purchaseStatus) {
-            purchaseStatus.style.display = 'none';
-        }
-        
-        // **【新增】确保游戏结束界面被隐藏**
-        const gameOverlay = document.getElementById('gameOverlay');
-        if (gameOverlay) {
-            gameOverlay.classList.add('hidden');
-        }
-        
-        if (typeof startGame === 'function') {
-            await startGame();
-        } else {
-            console.error("错误：找不到 startGame 函数！");
-        }
-    }, 1000);
-}
-
-        // Apple Pay支付流程
-function simulateApplePayPayment() {
-    return new Promise((resolve, reject) => {
-        console.log("Apple Pay支付流程...");
-        
-        // 创建支付中界面
-        const overlay = document.createElement('div');
-        overlay.id = 'paymentOverlay';
-        overlay.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.85);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-        `;
-        overlay.innerHTML = `
-            <div style="
-                background: white;
-                padding: 30px;
-                border-radius: 20px;
-                text-align: center;
-                max-width: 300px;
-                box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            ">
-                <div style="font-size: 50px; margin-bottom: 20px;">💳</div>
-                <h3 style="margin: 0 0 10px 0; color: #333;">Processing Payment</h3>
-                <p style="color: #666; margin: 0 0 20px 0; font-size: 24px; font-weight: bold;">$6.99</p >
-                <div style="color: #4CAF50; margin-bottom: 15px;">Please authenticate with Touch ID / Face ID</div>
-                <div style="width: 50px; height: 50px; border: 3px solid #f3f3f3; border-top: 3px solid #3498db; border-radius: 50%; margin: 0 auto; animation: spin 1s linear infinite;"></div>
-            </div>
-            <style>
-                @keyframes spin {
-                    0% { transform: rotate(0deg); }
-                    100% { transform: rotate(360deg); }
-                }
-            </style>
-        `;
-        document.body.appendChild(overlay);
-        
-        // 模拟支付处理
-        setTimeout(() => {
-            // 移除支付界面
-            const existingOverlay = document.getElementById('paymentOverlay');
-            if (existingOverlay) {
-                document.body.removeChild(existingOverlay);
-            }
-            
-            // 模拟成功（实际开发中这里会有真实支付结果）
-            resolve();
-        }, 1500);
-    });
-}
-
-        
-// ==================== 页面初始化 ====================
-
-document.addEventListener('DOMContentLoaded', function() {
-    console.log("页面加载完成，初始化...");
-    
-    const applePayContainer = document.getElementById('applePayButton');
-    const startButton = document.getElementById('startButton');
-    const purchaseStatus = document.getElementById('purchaseStatus');
-    
-    // 确保所有元素都存在
-    if (!applePayContainer || !startButton || !purchaseStatus) {
-        console.error("错误：找不到必要的DOM元素！");
-        return;
-    }
-    
-    // 检查是否支持Apple Pay
-    if (isIOSDevice() && isApplePayAvailable()) {
-        console.log("iOS设备支持Apple Pay，显示支付按钮");
-        
-        // 清空容器，确保没有重复按钮
-        applePayContainer.innerHTML = '';
-        applePayContainer.style.display = 'block';
-        
-        // 创建Apple Pay按钮
-        const applePayBtn = document.createElement('button');
-        applePayBtn.id = 'applePayBtn';
-        applePayBtn.innerHTML = '💰 Pay Unlock Kung Fu Game <span style="font-size: 24px; font-weight: bold;">$6.99</span>';
-        applePayBtn.style.cssText = `
-            background: #FF9800;
-            color: white;
-            border: none;
-            border-radius: 12px;
-            padding: 16px 32px;
-            font-size: 20px;
-            font-weight: 500;
-            cursor: pointer;
-            margin: 15px auto;
-            width: 100%;
-            max-width: 250px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            transition: all 0.2s;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            letter-spacing: 0.5px;
-            display: block;
-        `;
-
-        
-        // 按钮悬停效果
-        applePayBtn.onmouseover = function() {
-            this.style.transform = 'scale(1.02)';
-            this.style.boxShadow = '0 6px 15px rgba(0,0,0,0.25)';
-        };
-        applePayBtn.onmouseout = function() {
-            this.style.transform = 'scale(1)';
-            this.style.boxShadow = '0 4px 10px rgba(0,0,0,0.2)';
-        };
-      
-        // 定义产品ID
-        const IAP_PRODUCT_ID = 'com.daxiong.kungfu.unlock';
-       
-        // 添加点击事件 - 只处理支付，不启动游戏
-        applePayBtn.addEventListener('click', async function(e) {
-            e.stopPropagation(); // 阻止事件冒泡
-            
-            console.log("Apple Pay button clicked");
-
-             // 检查 plus 是否可用
-    if (typeof plus === 'undefined') {
-        alert('支付环境未准备好，请确保在 App 内使用，或重启应用');
-        return;
-    }
-            // 防止重复点击
-            if (this.disabled) return;
-            
-            // 禁用按钮，显示支付中状态
-            this.disabled = true;
-            this.style.opacity = '0.7';
-            this.innerHTML = '⏳ Processing Pay...';
-            
-            try {
-               
-        // 根据环境选择支付方式
-        if (typeof plus !== 'undefined') {
-             // 真机环境：调用真实苹果内购（修正参数）
-        const paymentResult = await new Promise((resolve, reject) => {
-            // 1. 获取支付通道
-        plus.payment.getChannels(
-            (channels) => {
-                // 找到苹果内购通道
-                const iapChannel = channels.find(ch => ch.id === 'appleiap');
-                if (!iapChannel) {
-                    reject(new Error('未找到苹果内购通道，请检查manifest配置'));
-                    return;
-                }
-
-                // 2. 请求商品信息（必须！）
-                iapChannel.requestOrder(
-                    [IAP_PRODUCT_ID],
-                    (orderList) => {
-                        console.log('商品信息获取成功', orderList);
-                        
-                        // 3. 发起支付
-                        plus.payment.request(
-                            iapChannel,
-                            {
-                                productid: IAP_PRODUCT_ID,
-                                manualFinishTransaction: true // 建议手动完成交易
-                            },
-                            resolve,  // 支付成功
-                            reject   // 支付失败
-                        );
-                    },
-                    (err) => {
-                        reject(new Error('获取商品信息失败：' + (err.message || JSON.stringify(err))));
-                    }
-                );
-            },
-            (err) => {
-                reject(new Error('获取支付通道失败：' + (err.message || JSON.stringify(err))));
-            }
-        );
-    });
-           
-            console.log('Real payment success:', paymentResult);
-        // 支付成功后调用原有的处理函数（它会隐藏支付按钮、显示购买状态并启动游戏）
-                
-        } else {
-            // 浏览器环境：调用模拟支付（保留原有 simulateApplePayPayment 函数）
-           
-            console.log('Simulating payment in browser');
-            await simulateApplePayPayment();
-        }
-
-                
-            // 支付成功后调用原有处理函数
-        await handlePurchaseSuccess();      
-          
-            } catch (error) {
-                console.error("Payment failed:", error);
-                
-                // 恢复按钮状态
-                this.disabled = false;
-                this.style.opacity = '1';
-                this.innerHTML = '💰 Pay Unlock Kung Fu Game <span style="font-size: 24px; font-weight: bold;">$6.99</span>';
-                
-             // 错误提示：根据环境选择合适的方式
-        const errorMsg = '支付失败：' + (error.message || '未知错误');
-        if (typeof plus !== 'undefined' && plus.nativeUI) {
-            plus.nativeUI.toast(errorMsg, { duration: 'long' });
-        } else {
-            alert(errorMsg);
-        }
-    }
-}); 
-        
-        applePayContainer.appendChild(applePayBtn);
-
-        
-        // 添加安全支付提示
-        const securityNote = document.createElement('p');
-        securityNote.style.cssText = `
-            color: #666;
-            font-size: 13px;
-            margin: 10px auto 0 auto;
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-        `;
-        securityNote.innerHTML = '🔒 Secure Payment · Use Touch ID / Face ID';
-        applePayContainer.appendChild(securityNote);
-        
-        // 确保开始按钮是隐藏的
-        startButton.style.display = 'none';
-        
-    } else {
-        console.log("设备不支持Apple Pay，显示开始按钮");
-        
-        // 非iOS设备，隐藏支付区域，显示开始按钮
-        applePayContainer.style.display = 'none';
-        startButton.style.display = 'inline-block';
-    }
-    
-    // 原有的开始按钮点击事件（仅当手动点击时触发）
-    startButton.addEventListener('click', async function(e) {
-        e.stopPropagation();
-        console.log('开始按钮被手动点击');
-        
-        if (typeof startGame === 'function') {
-            await startGame();
-        }
-    });
-});
-      
         // 元素获取
         const timerElement = document.getElementById('timer');
         const scoreElement = document.getElementById('score');
@@ -1194,7 +753,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const relaxMusicList = [
             { name: "Joyful Chirp of Flocking Birds", src: "music/Joyful Chirp of Flocking Birds.mp3" },
             { name: "Mountain Stream's Flow", src: "music/Mountain Stream's Flow.mp3" },
-            { name: "Gentle Waves", src: "music/Gentle Waves.mp3" }
+            { name: "Ocean Waves", src: "https://www.bensound.com/bensound-music/bensound-relaxing.mp3" }
         ];
 
         // Music Playback Helper Functions
@@ -1315,10 +874,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         async function startGame() {
-            // 重置计时保护，避免上一局的残留影响
-            lastTimerUpdate = 0;
-            
             console.log("startGame called.");
+            // alert("Game is starting!"); // Temporarily remove alert to avoid blocking, use console.log
+
+            // If game is already running or starting, ignore duplicate calls
             if (isGameRunning) { 
                 console.log("Game is already running or starting, ignoring duplicate call.");
                 return;
@@ -1355,16 +914,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log("startGame finished. Game is running.");
         }
 
-        let lastTimerUpdate = 0;
         function updateTimer() {
-            // 防止setInterval堆积调用
-            const now = Date.now();
-            if (lastTimerUpdate && now - lastTimerUpdate < 800) {
-                // 距离上次更新不足800ms，跳过此次执行
-                return;
-            }
-            lastTimerUpdate = now;
-          
             // Only update time if the game is running
             if (!isGameRunning) { 
                 if (gameInterval) { // If game stopped but timer is still running, clear it
@@ -1518,18 +1068,13 @@ document.addEventListener('DOMContentLoaded', function() {
             isGameBgMusicPlaying = false;
             bgMusicIcon.classList.remove('fa-volume-mute');
             bgMusicIcon.classList.add('fa-volume-up');
+
             gameOverlay.classList.remove('hidden');
             gameOverlay.querySelector('h2').textContent = 'Training Ended!';
             gameOverlay.querySelector('p').textContent = `Your final score is: ${score}, and Bear reached the ${levelElement.textContent} realm!`;
             gameOverlay.querySelector('button').textContent = 'Play Again';
-            // 确保游戏结束时，已付费用户看不到支付按钮
-            if (window.hasPurchased) {
-                document.getElementById('applePayButton').style.display = 'none';
-                document.getElementById('startButton').style.display = 'inline-block';
-            }
-            gameOverlay.classList.add('ended');       
-    } 
-        
+        }
+
         // --- Event Listeners ---
         actionButtons.forEach(button => {
             button.addEventListener('click', handlePlayerAction);
@@ -1618,10 +1163,10 @@ document.addEventListener('DOMContentLoaded', function() {
             resetGame(); 
         });
 
-            
     </script>
 </body>
 </html>
+
 
 
 
