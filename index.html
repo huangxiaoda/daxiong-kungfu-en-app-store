@@ -662,6 +662,11 @@
     justify-content: flex-start;      /* 改为顶部对齐 */
     padding-top: 80px;                /* 调整顶部留白，使内容不贴顶 */
 }
+     /* 开始界面上移 */
+.overlay:not(.ended) {
+    transform: translateY(-20px);
+}
+            
             .overlay.ended button {
                 margin-top: -5px;
             }
@@ -1255,6 +1260,7 @@
     </script>
 </body>
 </html>
+
 
 
 
