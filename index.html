@@ -1161,6 +1161,7 @@
             gameOverlay.querySelector('h2').textContent = 'Training Ended!';
             gameOverlay.querySelector('p').textContent = `Your final score is: ${score}, and Bear reached the ${levelElement.textContent} realm!`;
             gameOverlay.querySelector('button').textContent = 'Play Again';
+            gameOverlay.classList.add('ended'); 
         }
 
         // --- Event Listeners ---
@@ -1254,6 +1255,7 @@
     </script>
 </body>
 </html>
+
 
 
 
